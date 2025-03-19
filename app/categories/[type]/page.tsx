@@ -1,29 +1,54 @@
 "use client";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { categories as data, empty } from "@/constants/data";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
+import React, { Suspense, useContext, useEffect, useState } from "react";
+import {
+  categories as data,
+  categoriesWomen as data2,
+  empty,
+} from "@/constants/data";
 import Image from "next/image";
 import BlackHeaderSeeAll from "@/components/shared/BlackHeaderSeeAll";
 import ItemCard from "@/components/shared/ItemCard";
 import CatItemCard from "@/components/shared/CatItemCard";
 import HeaderSeeAll from "@/components/shared/HeaderSeeAll";
+import { GlobalContext } from "@/context/context";
+import Loading from "@/app/Loading";
+import Link from "next/link";
+import Button from "@/components/shared/Button";
+import { FiArrowRight } from "react-icons/fi";
+import { useCollectionByHandle } from "@/hooks/useCollectionByHandle";
+import ItemCardLoading from "@/components/shared/ItemCardLoading";
+import { useMultipleCollections } from "@/hooks/useMultipleCollections";
 
-const Page = () => {
+const TypePage = () => {
   const params = useParams();
-  const [categories, setCategories] = useState<any>({});
+  const path = usePathname();
+  const search = useSearchParams();
+  const type = new URLSearchParams(search).get("type");
+  const idee = new URLSearchParams(search).get("id");
+
+  const { subCat, categories, setCatCustomLayout, setCategories } =
+    useContext(GlobalContext);
+
+  const { collection, fetchCollection, loading, error } = useCollectionByHandle();
+  const { fetchCollections } = useMultipleCollections()
 
   const handleIncomingData = () => {
     let newCat: any = null; // Initialize to avoid undefined errors
 
     switch (params.type) {
       case "men":
-        newCat = data.men;
+        {
+          newCat = data;
+          fetchCollection("men-top-deals");
+        }
         break;
-      case "women":
-        newCat = data.women;
-        break;
-      case "cosmetics":
-        newCat = data.cosmetics;
+      case "women":{
+        newCat = data2;
+        // fetchCollection("women-top-deals")
+        fetchCollections(["women-top-deals", "men-top-deals"])
+        
+      }
         break;
       default:
         console.warn("Unknown category:", params.type);
@@ -40,15 +65,19 @@ const Page = () => {
     if (!params.type) return;
 
     handleIncomingData();
-  }, []);
+  }, [params.type]);
+
+  useEffect(() => {
+    if (type && idee) return;
+    setCatCustomLayout(false);
+  }, [type, idee, path]);
 
   return (
-    <div className="w-full">
+    <div className="w-full max-md:px-4 max-lg:px-5">
       <div className="container">
         <div className="w-full flex flex-col gap-12 py-24">
-          
-            {/* Header and see all Component */}
-            <HeaderSeeAll
+          {/* Header and see all Component */}
+          <HeaderSeeAll
             wordOne="Top"
             wordTwo="Deals"
             link=""
@@ -56,96 +85,52 @@ const Page = () => {
           />
 
           {/* Grid container */}
-          <div className="grid grid-cols-4 gap-6">
-            {categories && categories.topDeals ?
-              categories.topDeals.map((item: any) => (
-                <ItemCard
-                  key={item.id}
-                  title={item.name}
-                  price={item.price}
-                  image={item.images[0]}
-                  id={item.id}
-                />
-              )) : (
-                <div className="w-full grid grid-cols-4 gap-6">
-                          {
-                            [1, 2, 3, 4].map((number, idx: number) => (
-                              <div
-                                key={idx}
-                                className="w-full aspect-[1.01] overflow-hidden bg-yellow-400 rounded-[20px] relative"
-                              >
-                                <Image
-                                  src={empty}
-                                  alt={`empty state for picture ${number}`}
-                                  loading="lazy"
-                                  className="w-full object-cover"
-                                />
-                              </div>
-                            ))
-                          }
-                        </div>  
-              )}
-          </div>
-        {/* </div> */}
-
-          {categories && categories.catalogue
-            ? categories.catalogue.map((item: any) => (
-                <div className="w-full flex flex-col gap-10">
-                  <BlackHeaderSeeAll
-                    title={item.name}
-                    link={"/"}
-                    linkWord={"See All"}
-                  />
-
-                  <div className="w-full grid grid-cols-4 gap-6">
-                    {item.products
-                      ? item.products.map((product:any) => (
-                          <ItemCard
-                            key={product.id}
-                            title={product.name}
-                            price={product.price}
-                            image={product.images[0]}
-                            id={product.id}
-                          />
-                        ))
-                      : (
-                        <div className="w-full grid grid-cols-4 gap-6">
-                          {
-                            [1, 2, 3, 4].map((number, idx: number) => (
-                              <div
-                                key={idx}
-                                className="w-full aspect-[1.01] overflow-hidden bg-yellow-400 rounded-[20px] relative"
-                              >
-                                <Image
-                                  src={empty}
-                                  alt={`empty state for picture ${number}`}
-                                  loading="lazy"
-                                  className="w-full object-cover"
-                                />
-                              </div>
-                            ))
-                          }
-                        </div>
-                      )}
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {loading ? (
+              [1, 2, 3, 4].map((_, idx: number) => (
+                <ItemCardLoading key={idx} />
               ))
-            : [1, 2, 3, 4].map((number, idx: number) => (
-                <div
+            ) : collection !== null && collection !== undefined && collection.length ? (
+              collection.map((item: any, idx: number) => (
+                <ItemCard
                   key={idx}
-                  className="w-full aspect-[1.01] overflow-hidden bg-yellow-400 rounded-[20px] relative"
-                >
-                  <Image
-                    src={empty}
-                    alt={`empty state for picture ${number}`}
-                    loading="lazy"
-                    className="w-full object-cover"
-                  />
-                </div>
-              ))}
+                  title={item.node.title}
+                  price={item.node.price}
+                  image={item.node.images !== null ? item.node.images?.edges[0]?.node.url : ""}
+                  id={item.node.id}
+                />
+              ))
+            ) : (
+              <div className="w-full h-[100px] flex items-center justify-center">
+                <p className="text-base font-normal text-deleteGrey">
+                  Error loading products
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="w-full max-md:px-4 max-lg:px-6 block lg:hidden">
+            <Link href="/">
+              <Button
+                text="See All"
+                icon={<FiArrowRight size={18} color="white" />}
+                className="!rounded=full w-full max-w-[400px] px-5 mt-3 text-base justify-center flex-row-reverse"
+                theme="dark"
+                type="fill"
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <TypePage />
+    </Suspense>
   );
 };
 

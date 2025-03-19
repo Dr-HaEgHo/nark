@@ -36,6 +36,18 @@ import whitebathrobelady from "@/assets/images/whitebathrobelady.jpeg";
 import whitecreamlady from "@/assets/images/whitecreamlady.jpeg";
 import whitenike from "@/assets/images/whitenike.png";
 import authGuy1 from "@/assets/images/authguy1.jpeg";
+import sustain from "@/assets/images/sustainability.png";
+import image from "@/assets/images/image-0.png"
+import image1 from "@/assets/images/image-1.png"
+import image2 from "@/assets/images/image-2.png"
+import image3 from "@/assets/images/image-3.png"
+import image4 from "@/assets/images/image-4.png"
+import image5 from "@/assets/images/image-5.png"
+
+
+
+
+
 
 // ICONS
 
@@ -45,6 +57,10 @@ import jamMenu from "@/assets/icons/jamMenu.svg";
 import Logo from "@/assets/icons/Logo.svg";
 import LogoWhite from "@/assets/icons/LogoWhite.svg";
 import nikelogo from "@/assets/icons/nikelogo.svg";
+
+import van from "@/assets/icons/van.svg";
+import gift from "@/assets/icons/gift.svg";
+import box from "@/assets/icons/package.svg";
 
 export {
   accessories,
@@ -85,6 +101,13 @@ export {
   whitecreamlady,
   whitenike,
   authGuy1,
+  sustain,
+  image,
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
 
   // ICONS
   adidas,
@@ -93,4 +116,7 @@ export {
   Logo,
   LogoWhite,
   nikelogo,
+  van,
+  gift,
+  box,
 };

@@ -62,5 +62,5 @@ module.exports = {
         pathname: '/videos/**',
       },
     ],
-  },
+  }
 }

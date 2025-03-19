@@ -4,62 +4,38 @@ import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Hero from "@/components/home/Hero";
 import NewArrivals from "@/components/home/NewArrivals";
 import { GlobalContext } from "@/context/context";
-import { ShopifyProductsResponse } from "@/types";
+import { createCheckout, getAllProducts, getCollectionId } from "@/utils/queries";
 import client from "@/utils/StorefrontInit";
-import { ClientResponse } from "@shopify/storefront-api-client";
-import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 
-
 export default function Home() {
-  const [products, setProducts] = useState<
-    { id: string; title: string; description: string; image: string }[]
-  >([]);
+  const [products, setProducts] = useState<any | null>(null);
 
-  const { setCustomLayout } = useContext(GlobalContext)
+  const { setCustomLayout } = useContext(GlobalContext);
 
+  // const handleCheckout = async () => {
+  //   const res = await fetch('/api/create-checkout', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       lineItems: [
+  //         {
+  //           variantId: "gid://shopify/ProductVariant/42553733742675",
+  //           quantity: 1,
+  //         },
+  //       ],
+  //     }),
+  //   });
 
-  const fetchData = async () => {
-    try {
-      const query = `
-        query searchProducts($query: String!, $first: Int!) {
-          search(query: $query, first: $first, types: PRODUCT) {
-            edges {
-              node {
-                ... on Product {
-                  id
-                  title
-                  description
-                  images(first: 1) {
-                    edges {
-                      node {
-                        url
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      `;
+  //   const data = await res.json();
 
-      const { data, errors } = await client.request(query, {
-        variables: {
-          query: "easter",
-          first: 1,
-        },
-      });
+  //   if (data.checkout?.webUrl) {
+  //     window.location.href = data.checkout.webUrl;
+  //   }
+  // };
 
-      if (errors) {
-        console.error("GraphQL Errors:", errors);
-      } else {
-        console.log("Fetched Data:", data);
-      }
-    } catch (error) {
-      console.error("Fetch Error:", error);
-    }
-  };
 
   const fetchAllProducts = async () => {
     let allProducts: {
@@ -73,34 +49,8 @@ export default function Home() {
 
     try {
       while (hasNextPage) {
-        const query = `
-          query getAllProducts($first: Int!, $after: String) {
-            products(first: $first, after: $after) {
-              edges {
-                node {
-                  id
-                  title
-                  description
-                  images(first: 1) {
-                    edges {
-                      node {
-                        url
-                      }
-                    }
-                  }
-                }
-                cursor
-              }
-              pageInfo {
-                hasNextPage
-                endCursor
-              }
-            }
-          }
-        `;
-
         const variables = { first: 50, after: cursor };
-        const data: any = await client.request(query, {
+        const data: any = await client.request(getAllProducts, {
           variables,
         });
 
@@ -117,7 +67,7 @@ export default function Home() {
         hasNextPage = data.data.products.pageInfo.hasNextPage;
         cursor = data.data.products.pageInfo.endCursor;
       }
-      
+
       setProducts(allProducts);
       console.log("Total Products Fetched:", products);
     } catch (error) {
@@ -130,17 +80,25 @@ export default function Home() {
   // console.log("names: ", gbola);
 
   useEffect(() => {
-    fetchData();
-    setCustomLayout(false)
-    // fetchAllProducts()
+    // fetchData();
+    setCustomLayout(false);
+    // fetchAllProducts();
   }, []);
 
   return (
     <>
-      <Hero/>
-      <NewArrivals/>
-      <BrowseCollections/>
-      <FeaturedProducts/>
+      {/* <button onClick={fetchAllProducts} className="py-2 cursor-pointer px-6 bg-black text-white ">Fetch Variants</button> */}
+      {/* <button onClick={handleCheckout} className="py-2 cursor-pointer px-6 bg-black text-white ">Checkout</button> */}
+      {/* <button
+        onClick={() => getCollectionByHandle("gid://shopify/Collection/292794826835")}
+        className="py-2 cursor-pointer px-6 bg-black text-white "
+      >
+        Get Collection
+      </button> */}
+      <Hero />
+      <NewArrivals />
+      <BrowseCollections />
+      <FeaturedProducts />
     </>
   );
 }

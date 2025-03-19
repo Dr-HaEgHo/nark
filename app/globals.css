@@ -14,15 +14,20 @@
   --disableBg : #EBEBEB;
   --disabledText : #BFBFBF;
   --inputBorder: #DCDCDC;
+  --borderGrey: #f5f4f4;
+  --borderGrey2: #DDDBDC;
   --inputTextGray: #B1B1B1;
   --inputIconGrey: #909090;
+  --deleteGrey: #737373;
   --authBg : #F9F9F9;
+  --sizebox : #F5F4F4;
   --authGreyText : #575757;
   --disabledTextDark : #7B7B7B;
   --border: #212121;
   --priceGreen: #4D8B00;
   --inputGreyDark: #0D0D0D;
   --inputTextDark: #636363;
+  --redOff: #D0021B;
 }
 
 @theme inline {
@@ -37,8 +42,12 @@
   --color-inputTextGray: var(--inputTextGray);
   --color-inputIconGrey: var(--inputIconGrey);
   --color-disableBg: var(--disableBg);
+  --color-borderGrey: var(--borderGrey);
+  --color-borderGrey2: var(--borderGrey2);
   --color-disabledText: var(--disabledText);
+  --color-deleteGrey: var(--deleteGrey);
   --color-authBg: var(--authBg);
+  --color-sizebox: var(--sizebox);
   --color-authGreyText: var(--authGreyText);
   --color-disabledTextDark: var(--disabledTextDark);
   --color-blackTrans: var(--blackTrans);
@@ -46,6 +55,7 @@
   --color-priceGreen: var(--priceGreen);
   --color-inputTextDark: var(--inputTextDark);
   --color-inputGreyDark: var(--inputGreyDark);
+  --color-redOff: var(--redOff);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -78,12 +88,19 @@ body {
 }
 
 .container {
-  @apply w-[86%] max-w-[1240px] mx-auto 
+  @apply w-full lg:w-[86%] max-w-[1240px] mx-auto 
 }
 
 .authContainer {
   @apply w-[86%] max-w-[1560px] mx-auto 
+}
 
+.bg-top-gradient{
+  background: linear-gradient(to top , rgba(0, 0, 0, 0.6)10% , rgba(0, 0, 0, 0)), url('../assets/images/authbg.png');
+  width: 100%;
+  /* height: 100%; */
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .side-gradient{
@@ -98,7 +115,23 @@ body {
 }
 
 .hoverActiveScale{
+  @apply transition duration-200 transform hover:scale-[1.016] active:scale-[1]
+}
+
+.hoverActiveScale2{
   @apply transition duration-200 transform hover:scale-[1.08] active:scale-[1]
+}
+
+.hoverActiveOpacity{
+  @apply cursor-pointer hover:opacity-[80%] active:opacity-[90%] transition duration-300
+}
+
+.hoverActiveUnderline{
+  @apply cursor-pointer hover:underline active:no-underline transition duration-300
+}
+
+.hoverActiveGrey{
+  @apply cursor-pointer hover:bg-borderGrey active:bg-borderGrey2 transition duration-300
 }
 
 .card:hover .btns{
@@ -112,13 +145,65 @@ body {
   /* animation: .3s slide-up linear once; */
 }
 
-@keyframes slide-up {
+.sm-shad{
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
+}
+
+.cartOpen {
+  @apply fixed top-0 z-[999999999] w-full bg-blackTrans h-screen flex items-center justify-end;
+  animation: fade-in .3s ease-in none;
+}
+
+.cartClose {
+  @apply fixed top-0 -z-[9999] w-full opacity-0 bg-blackTrans h-screen flex items-center justify-end;
+  animation: fade-out .3s ease-in none;
+}
+
+.drawerOpen{
+  @apply transition right-0 duration-300 w-[477px] h-full relative min-h-[900px] top-0 flex flex-col justify-between z-50 bg-background;
+  animation: slide-in .3s ease-in none;
+}
+.drawerClose{
+  @apply -right-[500px] transition duration-300 w-[477px] h-full relative min-h-[900px] top-0 flex flex-col justify-between z-50 bg-background;
+  animation: slide-out .3s ease-in none;
+}
+
+@keyframes slide-in {
   from{
     opacity: 0;
-    top: 0%;
+    right: -500px;
   } 
   to{
     opacity: 1;
-    top: 100%
+    right: 0px
+  }
+}
+
+@keyframes slide-out {
+  from{
+    opacity: 1;
+    right: 0px;
+  } 
+  to{
+    opacity: 0;
+    right: -500px
+  }
+}
+
+@keyframes fade-in {
+  from{
+    opacity: 0;
+  } 
+  to{
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from{
+    opacity: 1;
+  } 
+  to{
+    opacity: 0;
   }
 }

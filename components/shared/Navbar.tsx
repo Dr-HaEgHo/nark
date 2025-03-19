@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { RiCloseLargeFill } from "react-icons/ri";
 import { Heart, SearchNormal1, Shop } from "iconsax-react";
@@ -12,15 +12,16 @@ import { GrCart } from "react-icons/gr";
 import logo from "@/assets/icons/Logo.svg";
 import jamMenu from "@/assets/icons/jamMenu.svg";
 import Input from "./Input";
+import { GlobalContext } from "@/context/context";
 
 const links = [
   { id: 1, name: "Men", route: "/categories/men" },
   { id: 2, name: "Women", route: "/categories/women" },
-  {
-    id: 3,
-    name: "Cosmetics",
-    route: "/categories/cosmetics",
-  },
+  // {
+  //   id: 3,
+  //   name: "Cosmetics",
+  //   route: "/categories/cosmetics",
+  // },
   { id: 4, name: "Shop", route: "/categories" },
   { id: 5, name: "Contact", route: "/", subroute: "/categories" },
 ];
@@ -29,6 +30,7 @@ const Navbar = () => {
   const path = usePathname();
 
   const [open, setOpen] = useState<boolean>(false);
+  const {customLayout} = useContext(GlobalContext)
 
   // const sendData = () => {};
 
@@ -39,13 +41,16 @@ const Navbar = () => {
   };
 
   return (
-    <div className="relative z-[9999999] h-fit w-full px-[30px]">
+    <>
+      {
+        customLayout ? "" : (
+          <div className="relative z-[9999999] h-fit w-full px-[30px]">
       <div className="container relative z-10 mx-auto w-full py-5 lg:py-0">
         {/* Large devices upward */}
         <div className="flex items-center justify-between">
           {/* LOGO  */}
           <div className="flex items-center justify-between">
-            <Image src={logo} alt="logo" loading="lazy" />
+            <Link href="/"><Image src={logo} alt="logo" loading="lazy" /></Link>
           </div>
 
           {/* NAVIGATION LINKS */}
@@ -127,9 +132,9 @@ const Navbar = () => {
 
               <ul className="mt-7 flex w-full flex-[1] flex-col gap-4">
                 {links &&
-                  links.map((link) => (
+                  links.map((link, idx: number) => (
                     <li
-                      key={link.id}
+                      key={idx}
                       onClick={toggleMenu}
                       className={`rounded-lg p-4 text-lg font-[500] uppercase ${
                         link.route === path ? "text-white" : "text-grey1000"
@@ -151,6 +156,9 @@ const Navbar = () => {
         </div>
       </div>
     </div>
+        )
+      }
+    </>
   );
 };
 

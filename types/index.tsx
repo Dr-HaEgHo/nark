@@ -11,7 +11,7 @@ export interface emailInputPropsFade {
   id?: string;
   label?: string;
   placeholder: string;
-  type: string;
+  type?: string;
   setValue?: (value: string) => void;
   icon?: ReactNode;
   iconStart?: ReactNode;
@@ -23,7 +23,7 @@ export interface emailInputPropsFade {
   inputWrapperClass?: string;
   touched?: boolean | undefined;
   handleChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  handleClick: () => void;
+  handleClick?: () => void;
   blur?: React.FocusEventHandler<HTMLInputElement> | undefined;
 }
 

@@ -1,11 +1,12 @@
-import Login from '@/components/auth/Login';
+'use client'
+import { Login } from '@/components/auth';
 import { Metadata } from 'next';
 import React from 'react'
 
-export const metadata: Metadata = {
-  title: "Nark | Login",
-  description: "Fully protected login page",
-};
+// export const metadata: Metadata = {
+//   title: "Nark | Login",
+//   description: "Fully protected login page",
+// };
 
 const Page = () => {
 
@@ -16,4 +17,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default Page;

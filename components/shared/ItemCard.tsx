@@ -3,23 +3,30 @@ import Image, { StaticImageData } from "next/image";
 import React, { FC } from "react";
 import Button from "./Button";
 import { Eye, Heart } from "iconsax-react";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   title?: string;
   price?: number;
-  image?: StaticImageData;
+  image?: string;
   id?: string;
 }
 
 const ItemCard: FC<Props> = ({ title, price, image, id }) => {
+
+  const router = useRouter();
+  const path = usePathname();
+
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="aspect-[0.83] card rounded-[15px] overflow-hidden bg-disableBg relative">
         <Image
-          src={image ?? empty}
+          src={image ?? ""}
           alt={title ?? ""}
           loading="lazy"
           className="w-full h-full object-cover"
+          width={1024}
+          height={1024}
         />
 
         {/* FLOATING BUTTONS */}
@@ -52,10 +59,10 @@ const ItemCard: FC<Props> = ({ title, price, image, id }) => {
         
       </div>
 
-      <div className="flex flex-col gap-2">
-        <p className="text-2xl font-medium leading-[24px]">{title ?? 'Product Name'}</p>
+      <div className="flex flex-col items-start gap-2">
+        <button onClick={() => router.push(`/categories/product?id=${id}`)} className="transition duration-200 text-2xl text-left font-medium cursor-pointer leading-[24px] hover:opacity-60 active:opacity-50 line-clamp-2 overflow-ellipsis">{title ?? 'Product Name'}</button>
         <p className="text-2xl font-medium leading-[24px] text-priceGreen">
-          { price ?? '$960'}
+          { price ? `$${price}` : ''}
         </p>
       </div>
     </div>

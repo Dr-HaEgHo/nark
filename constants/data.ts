@@ -751,22 +751,20 @@ const Watches = [
   }
 ]
 
+const setImages = () => {
 
-export const categories = {
-  men: {
-    title: "Men's Wear",
-    image: blueshirthatguy,
-    topDeals: menTopDeals,
-    catalogue: [
-      { id: 2322, name: "Clothings", image: blueshirthatguy, products: Clothings },
-      { id: 2323, name: "Acccessories", image: whiteandblazerguy, products: Acccessories },
-      { id: 2324, name: "Shoes", image: brownnike, products: Shoes },
-      { id: 2325, name: "Watches", image: goldwatch, products: Watches },
-    ],
-  },
-  women: {
-    title: "Women's Wear",
-    image: "",
+}
+
+export const categoryLinks = [
+  {id: 2, title: "Men", image: whiteandblazerguy, route: "/categories/men"},
+  {id: 3, title: "Women", image: redtoplady, route: "/categories/women"},
+]
+
+export const categoriesWomen = {
+  topDeals: womenTopDeals,
+  fashion: {
+    title: "Fashion",
+    image: browncoatlady,
     topDeals: womenTopDeals,
     catalogue: [
       { id: 2322, name: "Clothings", image: browncoatlady, products: Clothings },
@@ -775,9 +773,20 @@ export const categories = {
       { id: 2325, name: "Watches", image: goldwatch, products: Watches },
     ],
   },
-  cosmetics: {
-    title: "Cosmetics",
-    image: "",
+  beauty: {
+    title: "Beauty",
+    image: accessories,
+    topDeals: menTopDeals,
+    catalogue: [
+      { id: 2322, name: "Clothings", image: blueshirthatguy, products: Clothings },
+      { id: 2323, name: "Acccessories", image: whiteandblazerguy, products: Acccessories },
+      { id: 2324, name: "Shoes", image: brownnike, products: Shoes },
+      { id: 2325, name: "Watches", image: goldwatch, products: Watches },
+    ],
+  },
+  lifestyle: {
+    title: "Lifestyle",
+    image: blackshoes,
     topDeals: cosmeticTopDeals,
     catalogue: [
       { id: 231, name: "Facial Skin Care", image: whitebathrobelady, products: cosmeticTopDeals },
@@ -788,8 +797,39 @@ export const categories = {
   },
 };
 
-export const categoryLinks = [
-  {id: 1, title: "Cosmetics", route: "/categories/cosmetics"},
-  {id: 2, title: "Men's Fashion", route: "/categories/men"},
-  {id: 3, title: "Women's Fashion", route: "/categories/women"},
-]
+export const categories = {
+  topDeals:menTopDeals,
+  fashion: {
+    title: "Fashion",
+    image: blueshirthatguy,
+    topDeals: womenTopDeals,
+    catalogue: [
+      { id: 2322, name: "Clothings", image: browncoatlady, products: Clothings },
+      { id: 2323, name: "Acccessories", image: accessories, products: Acccessories },
+      { id: 2324, name: "Shoes", image: blackshoes, products: Shoes },
+      { id: 2325, name: "Watches", image: goldwatch, products: Watches },
+    ],
+  },
+  beauty: {
+    title: "Beauty",
+    image: whiteandblazerguy,
+    topDeals: menTopDeals,
+    catalogue: [
+      { id: 2322, name: "Clothings", image: blueshirthatguy, products: Clothings },
+      { id: 2323, name: "Acccessories", image: whiteandblazerguy, products: Acccessories },
+      { id: 2324, name: "Shoes", image: brownnike, products: Shoes },
+      { id: 2325, name: "Watches", image: goldwatch, products: Watches },
+    ],
+  },
+  lifestyle: {
+    title: "Lifestyle",
+    image: brownnike,
+    topDeals: cosmeticTopDeals,
+    catalogue: [
+      { id: 231, name: "Facial Skin Care", image: whitebathrobelady, products: cosmeticTopDeals },
+      { id: 232, name: "Fragrances", image: fragrances, products: cosmeticTopDeals },
+      { id: 233, name: "Body Oil/Lotion", image: blackcreamlady, products: cosmeticTopDeals },
+      { id: 234, name: "Sunscreen/Serum", image: blackoillady, products: cosmeticTopDeals },
+    ],
+  },
+};

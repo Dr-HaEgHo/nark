@@ -5,14 +5,14 @@ import React from "react";
 const ImageComponent = () => {
   return (
     <div className="w-full aspect-[1.03] rounded-tr-[20px] overflow-hidden relative">
-      <Image
+      {/* <Image
         src={authGuy1}
         alt="auth guy"
         loading="lazy"
         className="w-full h-full object-cover"
-      />
+      /> */}
 
-      <div className="w-full h-full flex flex-col items-center p-16 justify-between absolute top-0 left-0 top-gradient-full">
+      <div className="w-full h-full flex flex-col items-center p-16 justify-between absolute top-0 left-0">
         <div className="w-full self-start">
           <Image src={LogoWhite} alt="white logo" loading="lazy"/>
         </div>
