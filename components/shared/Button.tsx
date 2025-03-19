@@ -20,6 +20,7 @@ const Button: FC<buttonProps> = (props) => {
     <>
       {props.type === "fill" && (
         <button
+        onClick={props.cta}
           className={cn(
             "flex w-fit items-center gap-2 rounded-full p-1 pr-6 hoverActiveScale",
             props.className,

@@ -789,7 +789,7 @@ export const categories = {
 };
 
 export const categoryLinks = [
-  {id: 1, title: "Cosmetics", route: "/categories/cosmetics"},
-  {id: 2, title: "Men's Fashion", route: "/categories/men"},
-  {id: 3, title: "Women's Fashion", route: "/categories/women"},
+  {id: 1, title: "Cosmetics", image: whitebathrobelady, route: "/categories/cosmetics"},
+  {id: 2, title: "Men's Fashion", image: whiteandblazerguy, route: "/categories/men"},
+  {id: 3, title: "Women's Fashion", image: redtoplady, route: "/categories/women"},
 ]

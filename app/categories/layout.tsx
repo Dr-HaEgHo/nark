@@ -40,7 +40,7 @@ const CategoriesLayout = ({children}: {children: ReactNode}) => {
     if(!path) return;
 
     handleIncomingData()
-  }, [])
+  }, [path])
 
   return (
     <div>
