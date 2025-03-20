@@ -1,30 +1,36 @@
 'use client'
 import CategoryHero from "@/components/categories/CategoryHero"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ReactNode, useContext, useEffect, useState } from "react"
-import { categories as data } from '@/constants/data'
+import { categories as data, categoriesWomen as data2  } from '@/constants/data'
 import { GlobalContext } from "@/context/context"
 
 
 const CategoriesLayout = ({children}: {children: ReactNode}) => {
 
+  const router = useRouter();
+  const search = useSearchParams()
+  const type = new URLSearchParams().get('type')
+  const idee = new URLSearchParams().get('id')
+
   const [categories, setCategories] = useState<any>({})
-  const { catCustomLayout } = useContext(GlobalContext)
+  const { catCustomLayout, setCatCustomLayout } = useContext(GlobalContext);
+
+
+
 
   const path = usePathname()
 
   const handleIncomingData = () => {
     let newCat: any = null; // Initialize to avoid undefined errors
+    
 
     switch (path) {
       case "/categories/men":
-        newCat = data.men;
+        newCat = data;
         break;
       case "/categories/women":
-        newCat = data.women;
-        break;
-      case "/categories/cosmetics":
-        newCat = data.cosmetics;
+        newCat = data2;
         break;
       default:
         console.warn("Unknown category:", path);
@@ -37,12 +43,20 @@ const CategoriesLayout = ({children}: {children: ReactNode}) => {
     }
   }
 
-  useEffect(() => {
 
+
+
+  useEffect(() => {
     if(!path) return;
 
     handleIncomingData()
-  }, [path])
+  }, [path]);
+
+  useEffect(() => {
+    if(type && idee) return;
+    setCatCustomLayout(false);
+  }, [type, idee, path]);
+
 
   return (
     <div>

@@ -45,7 +45,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* LOGO  */}
           <div className="flex items-center justify-between">
-            <Image src={logo} alt="logo" loading="lazy" />
+            <Link href="/"><Image src={logo} alt="logo" loading="lazy" /></Link>
           </div>
 
           {/* NAVIGATION LINKS */}

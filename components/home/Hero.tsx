@@ -6,6 +6,7 @@ import brownhat from "@/assets/images/hatman.jpeg";
 import purple from "@/assets/images/purplelady.jpeg";
 import brownlady from "@/assets/images/nudecoatlady.jpeg";
 import { logos } from "@/constants/data";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -20,13 +21,14 @@ const Hero = () => {
               <span className="playfair italic">Level Up</span> Your Style{" "}
               <br /> with Our Collections
             </h1>
+            <Link href="/auth">
             <Button
               text="Start Shopping"
               icon={<FiArrowRight size={18} color="white" />}
               className="!rounded=full w-fit px-5 mt-3 text-base justify-center flex-row-reverse"
               theme="dark"
               type="fill"
-            />
+            /></Link>
           </div>
 
           <div className="w-full grid grid-cols-3 items-end gap-6 mb-15">

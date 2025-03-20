@@ -16,14 +16,14 @@ const Page = () => {
     let newCat: any = null; // Initialize to avoid undefined errors
 
     switch (params.type) {
-      case "men":
-        newCat = data.men;
+      case "men/beauty":
+        newCat = data.beauty;
         break;
       case "women":
-        newCat = data.women;
+        newCat = data.fashion;
         break;
       case "cosmetics":
-        newCat = data.cosmetics;
+        newCat = data.lifestyle;
         break;
       default:
         console.warn("Unknown category:", params.type);
