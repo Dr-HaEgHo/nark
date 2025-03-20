@@ -17,11 +17,19 @@ interface messageType {
 interface ContextProps {
   customLayout: boolean;
   setCustomLayout: Dispatch<SetStateAction<boolean>>;
+  catCustomLayout: boolean;
+  setCatCustomLayout: Dispatch<SetStateAction<boolean>>;
+  cartOpen: boolean;
+  setCartOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const GlobalContext = createContext<ContextProps>({
   customLayout: false,
   setCustomLayout: (): boolean => false,
+  catCustomLayout: false,
+  setCatCustomLayout: (): boolean => false,
+  cartOpen: false,
+  setCartOpen: () : boolean => false
 });
 
 export const GlobalContextProvider = ({
@@ -31,6 +39,8 @@ export const GlobalContextProvider = ({
 }) => {
   // const [isActive, setIsActive] = useState<string>("");
   const [ customLayout, setCustomLayout ] = useState<boolean>(false)
+  const [ catCustomLayout, setCatCustomLayout ] = useState<boolean>(false)
+  const [ cartOpen, setCartOpen ] = useState<boolean>(false)
 
   return (
     <GlobalContext.Provider
@@ -38,7 +48,11 @@ export const GlobalContextProvider = ({
         // isActive,
         // setIsActive,
         customLayout,
-        setCustomLayout
+        setCustomLayout,
+        catCustomLayout,
+        setCatCustomLayout,
+        cartOpen,
+        setCartOpen
       }}
 
     >

@@ -14,9 +14,12 @@
   --disableBg : #EBEBEB;
   --disabledText : #BFBFBF;
   --inputBorder: #DCDCDC;
+  --borderGrey: #f5f4f4;
+  --borderGrey2: #DDDBDC;
   --inputTextGray: #B1B1B1;
   --inputIconGrey: #909090;
   --authBg : #F9F9F9;
+  --sizebox : #F5F4F4;
   --authGreyText : #575757;
   --disabledTextDark : #7B7B7B;
   --border: #212121;
@@ -37,8 +40,11 @@
   --color-inputTextGray: var(--inputTextGray);
   --color-inputIconGrey: var(--inputIconGrey);
   --color-disableBg: var(--disableBg);
+  --color-borderGrey: var(--borderGrey);
+  --color-borderGrey2: var(--borderGrey2);
   --color-disabledText: var(--disabledText);
   --color-authBg: var(--authBg);
+  --color-sizebox: var(--sizebox);
   --color-authGreyText: var(--authGreyText);
   --color-disabledTextDark: var(--disabledTextDark);
   --color-blackTrans: var(--blackTrans);
@@ -98,7 +104,7 @@ body {
 }
 
 .hoverActiveScale{
-  @apply transition duration-200 transform hover:scale-[1.08] active:scale-[1]
+  @apply transition duration-200 transform hover:scale-[1.016] active:scale-[1]
 }
 
 .card:hover .btns{
@@ -110,6 +116,10 @@ body {
   align-items: center;
   justify-content: center;
   /* animation: .3s slide-up linear once; */
+}
+
+.sm-shad{
+  
 }
 
 @keyframes slide-up {

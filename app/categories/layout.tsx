@@ -1,13 +1,15 @@
 'use client'
 import CategoryHero from "@/components/categories/CategoryHero"
 import { usePathname } from "next/navigation"
-import { ReactNode, useEffect, useState } from "react"
+import { ReactNode, useContext, useEffect, useState } from "react"
 import { categories as data } from '@/constants/data'
+import { GlobalContext } from "@/context/context"
 
 
 const CategoriesLayout = ({children}: {children: ReactNode}) => {
 
   const [categories, setCategories] = useState<any>({})
+  const { catCustomLayout } = useContext(GlobalContext)
 
   const path = usePathname()
 
@@ -44,7 +46,7 @@ const CategoriesLayout = ({children}: {children: ReactNode}) => {
 
   return (
     <div>
-      <CategoryHero data={categories}/>
+      { catCustomLayout === false && <CategoryHero data={categories}/> }
       {children}
     </div>
   )
