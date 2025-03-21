@@ -19,9 +19,9 @@ const NewArrivals = () => {
           {/* Grid container */}
           <div className="grid grid-cols-4 gap-6">
             {newArrival &&
-              newArrival.map((item) => (
+              newArrival.map((item, idx: number) => (
                 <ItemCard
-                  key={item.id}
+                  key={idx}
                   title={item.name}
                   price={item.price}
                   image={item.images[0]}

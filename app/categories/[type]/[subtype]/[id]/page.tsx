@@ -6,7 +6,18 @@ import Button from "@/components/shared/Button";
 import { FiTruck } from "react-icons/fi";
 import { TfiPackage } from "react-icons/tfi";
 import { GoGift } from "react-icons/go";
-import { box, gift, sustain, van } from "@/assets/images";
+import {
+  box,
+  gift,
+  image,
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  sustain,
+  van,
+} from "@/assets/images";
 import Image from "next/image";
 
 const Page = () => {
@@ -21,18 +32,24 @@ const Page = () => {
         <div className="w-full">
           <div className="flex flex-col items-center pt-[92px]">
             <h1 className="text-[40px]  leading-[100%] font-medium text-center py-24">
-               <span className="playfair italic">Product </span>Details
+              <span className="playfair italic">Product </span>Details
             </h1>
           </div>
 
           <div className="w-full flex items-start justify-between">
             <div className="w-[67%] grid grid-cols-2 gap-2">
-              {[1, 2, 3, 4, 5, 6].map((stuff, idx: number) => (
-                <div
-                  key={idx}
-                  className="w-full aspect-[0.81] bg-orange-400"
-                ></div>
-              ))}
+              {[image, image1, image2, image3, image4, image5].map(
+                (stuff, idx: number) => (
+                  <div key={idx} className="w-full aspect-[0.81] bg-orange-400">
+                    <Image
+                      src={stuff}
+                      alt="product"
+                      width={1024}
+                      height={1024}
+                    />
+                  </div>
+                )
+              )}
             </div>
 
             <div className="sticky top-4 w-[31%]">

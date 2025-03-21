@@ -19,9 +19,9 @@ const FeaturedProducts = () => {
           {/* Grid container */}
           <div className="grid grid-cols-4 gap-6">
             {featuredProducts &&
-              featuredProducts.map((item) => (
+              featuredProducts.map((item, idx:number) => (
                 <ItemCard
-                  key={item.id}
+                  key={idx}
                   title={item.name}
                   price={item.price}
                   image={item.images[0]}

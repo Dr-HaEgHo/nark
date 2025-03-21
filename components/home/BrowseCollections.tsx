@@ -16,7 +16,7 @@ const Card: FC<CardProps> = ({ image, title, route }) => {
         src={image ?? empty}
         alt={title ?? ""}
         loading="lazy"
-        className="w-full object-cover z-0 relative"
+        className="w-full h-full object-cover z-0 relative"
       />
 
       <div className="absolute top-0 left-0 w-full h-full flex justify-start side-gradient z-10 p-10">
@@ -46,17 +46,10 @@ const BrowseCollections = () => {
             <h2 className="text-5xl font-medium text-center"><span className="playfair italic">Browse</span> <br /> Our Collection</h2>
           </div>
           <div className="w-full grid grid-cols-2 grid-rows-2 gap-6">
-            <div className="row-span-2 aspect-[0.875]">
-              <Card
-                image={cosmetics}
-                title="Cosmetics"
-                route={"/categories/cosmetics"}
-              />
-            </div>
-            <div className="w-full aspect-[1.81]">
+            <div className="w-full aspect-[0.98]">
               <Card image={guy} title="Men's" route={"/categories/men"} />
             </div>
-            <div className="w-full aspect-[1.81]">
+            <div className="w-full aspect-[0.98]">
               <Card
                 image={rainbow}
                 title="Women's"

@@ -62,8 +62,5 @@ module.exports = {
         pathname: '/videos/**',
       },
     ],
-  },
-  experimental: {
-    missingSuspenseWithCSRBailout: false,
-  },
+  }
 }

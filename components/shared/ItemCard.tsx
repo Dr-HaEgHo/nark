@@ -3,6 +3,7 @@ import Image, { StaticImageData } from "next/image";
 import React, { FC } from "react";
 import Button from "./Button";
 import { Eye, Heart } from "iconsax-react";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   title?: string;
@@ -12,6 +13,11 @@ interface Props {
 }
 
 const ItemCard: FC<Props> = ({ title, price, image, id }) => {
+
+  const router = useRouter()
+  const path = usePathname();
+
+
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="aspect-[0.83] card rounded-[15px] overflow-hidden bg-disableBg relative">

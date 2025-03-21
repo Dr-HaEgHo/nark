@@ -8,22 +8,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
-  const router = useRouter()
-
-  const { customLayout, setCustomLayout } = useContext(GlobalContext);
-
-  console.log("this is the customLayout", customLayout);
-
+  const router = useRouter();
   const sendData = () => {};
-  const handleSubmit = (e:FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    router.push('/')
+    router.push("/");
   };
-
-  useEffect(() => {
-    setCustomLayout(true);
-    console.log("this is the layout value: ", customLayout);
-  }, []);
 
   return (
     <div className="w-full flex flex-col gap-10">
@@ -71,7 +61,12 @@ const Login = () => {
           }
           inputClass="rounded-lg border border-inputBorder text-grey900 w-full"
         />
-        <Link href="/forgotPassword" className="text-foreground text-base text-right">Forgot Password?</Link>
+        <Link
+          href="/forgotPassword"
+          className="text-foreground text-base text-right"
+        >
+          Forgot Password?
+        </Link>
         <Button
           text={"Login"}
           size="medium"

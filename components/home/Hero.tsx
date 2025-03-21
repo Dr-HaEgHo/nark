@@ -60,8 +60,8 @@ const Hero = () => {
 
           <div className="w-full flex items-center justify-center gap-16">
             {logos &&
-              logos.map((logo) => (
-                <div key={logo.id} className="w-16 h-16">
+              logos.map((logo, idx:number) => (
+                <div key={idx} className="w-16 h-16">
                   <Image
                     src={logo.image}
                     alt="brown hat guy"

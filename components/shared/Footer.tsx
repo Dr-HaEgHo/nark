@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import { BiLogoFacebook, BiLogoInstagram, BiLogoTwitter } from "react-icons/bi";
 import Button from "./Button";
 import Image from "next/image";
@@ -10,10 +10,17 @@ import { FaInstagram } from "react-icons/fa";
 import { TbBrandTwitter } from "react-icons/tb";
 import { RiLinkedinLine } from "react-icons/ri";
 import { RiCopyrightLine } from "react-icons/ri";
+import { GlobalContext } from "@/context/context";
 
 const Footer = () => {
+
+  const {customLayout} = useContext(GlobalContext)
+
   return (
-    <footer className="bg-foreground py-4">
+    <>
+      {
+        customLayout ? "" : (
+          <footer className="bg-foreground py-4">
       <div className="container max-lg:px-5 py-10 flex items-start justify-between text-background">
         <div className="flex flex-col items-start gap-10 md:flex-row md:justify-between md:items-end">
           <Image src={logo} alt="website logo" loading="lazy" className="" />
@@ -61,9 +68,9 @@ const Footer = () => {
                   </h3>
                   <div className="flex flex-col gap-3">
                     {link.links &&
-                      link.links.map((item) => (
+                      link.links.map((item, idx:number) => (
                         <Link
-                        key={item.id}
+                        key={idx}
                           href={item.route}
                           className="text-sm text-grey800 font-normal hover:text-grey600 transition-all ease-in-out duration-200 "
                         >
@@ -115,6 +122,9 @@ const Footer = () => {
         <p className="text-copyright font-medium text-[20px]">Copyright Nark 2025. All right reserved</p>
       </div>
     </footer>
+        )
+      }
+    </>
   );
 };
 

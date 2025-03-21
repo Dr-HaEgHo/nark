@@ -757,6 +757,7 @@ export const categoryLinks = [
 ]
 
 export const categoriesWomen = {
+  topDeals: womenTopDeals,
   fashion: {
     title: "Fashion",
     image: browncoatlady,
@@ -793,6 +794,7 @@ export const categoriesWomen = {
 };
 
 export const categories = {
+  topDeals:menTopDeals,
   fashion: {
     title: "Fashion",
     image: blueshirthatguy,

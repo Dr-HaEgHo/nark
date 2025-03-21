@@ -13,13 +13,17 @@ interface Props {
 
 const CategoryHero: FC<Props> = ({ data }) => {
   const path = usePathname();
+  const type = path.split("/")[2]
 
   const router = useRouter();
+
+  console.log("some path you are",path)
 
   const routeItems = (link: string) => {
     router.push(link);
     console.log("we are happy to be here", path);
   };
+  
 
   return (
     <div className="w-full relative">
@@ -35,7 +39,7 @@ const CategoryHero: FC<Props> = ({ data }) => {
                     cta={() => routeItems(link.route)}
                     // icon={<FiArrowRight size={18} color="white" />}
                     className="!rounded=full w-fit hoverActiveScale2 cursor-pointer px-5 mt-3 text-base justify-center flex-row-reverse"
-                    theme={path === link.route ? "dark" : "disabled"}
+                    theme={path === link.route || type === link.title.toLowerCase() ? "dark" : "disabled"}
                     type="fill"
                   />
                 ))}
@@ -50,7 +54,7 @@ const CategoryHero: FC<Props> = ({ data }) => {
             {data && data.beauty
               ? (<div className="w-full grid grid-cols-3 items-end gap-6">
                   <Link
-                    href={`${path}/${data.fashion.title.toLowerCase()}`}
+                    href={`/categories/${path.split("/")[2]}/${data.fashion.title.toLowerCase()}`}
                     className="w-full aspect-[1.49] overflow-hidden bg-yellow-400 rounded-[20px] relative"
                   >
                     <Image
@@ -67,7 +71,7 @@ const CategoryHero: FC<Props> = ({ data }) => {
                     </div>
                   </Link>
                   <Link
-                    href={`${path}/${data.beauty.title.toLowerCase()}`}
+                    href={`/categories/${path.split("/")[2]}/${data.beauty.title.toLowerCase()}`}
                     className="w-full aspect-[1.49] overflow-hidden bg-yellow-400 rounded-[20px] relative"
                   >
                     <Image
@@ -84,7 +88,7 @@ const CategoryHero: FC<Props> = ({ data }) => {
                     </div>
                   </Link>
                   <Link
-                    href={`${path}/${data.lifestyle.title.toLowerCase()}`}
+                    href={`/categories/${path.split("/")[2]}/${data.lifestyle.title.toLowerCase()}`}
                     className="w-full aspect-[1.49] overflow-hidden bg-yellow-400 rounded-[20px] relative"
                   >
                     <Image

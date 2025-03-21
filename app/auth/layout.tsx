@@ -1,9 +1,19 @@
+'use client'
 import ImageComponent from "@/components/auth/ImageComponent";
-import React, { ReactNode } from "react";
+import { GlobalContext } from "@/context/context";
+import React, { ReactNode, useContext, useEffect } from "react";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
+
+  const { customLayout, setCustomLayout } = useContext(GlobalContext);
+
+
+  useEffect(() => {
+    setCustomLayout(true);
+    console.log("this is the layout value: ", customLayout);
+  }, []);
   return (
-    <div className="w-full bg-authBg h-screen min-w-[727px] flex items-center">
+    <div className="w-full h-screen bg-authBg bg-top-gradient min-w-[727px] flex items-center">
       <div className="authContainer">
         
         <div className="w-full flex items-center gap-[60px]">

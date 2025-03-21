@@ -89,7 +89,14 @@ body {
 
 .authContainer {
   @apply w-[86%] max-w-[1560px] mx-auto 
+}
 
+.bg-top-gradient{
+  background: linear-gradient(to top , rgba(0, 0, 0, 0.6)10% , rgba(0, 0, 0, 0)), url('../assets/images/authbg.png');
+  width: 100%;
+  /* height: 100%; */
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .side-gradient{

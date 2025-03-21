@@ -1,29 +1,38 @@
 "use client";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { categories as data, empty } from "@/constants/data";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
+import React, { Suspense, useContext, useEffect, useState } from "react";
+import {
+  categories as data,
+  categoriesWomen as data2,
+  empty,
+} from "@/constants/data";
 import Image from "next/image";
 import BlackHeaderSeeAll from "@/components/shared/BlackHeaderSeeAll";
 import ItemCard from "@/components/shared/ItemCard";
 import CatItemCard from "@/components/shared/CatItemCard";
 import HeaderSeeAll from "@/components/shared/HeaderSeeAll";
+import { GlobalContext } from "@/context/context";
+import Loading from "@/app/Loading";
 
-const Page = () => {
+const TypePage = () => {
   const params = useParams();
-  const [categories, setCategories] = useState<any>({});
-
+  const path = usePathname()
+  const search = useSearchParams();
+  const type = new URLSearchParams(search).get("type");
+  const idee = new URLSearchParams(search).get("id");
+  
+  const { subCat, categories, setCatCustomLayout, setCategories } = useContext(GlobalContext);
+  
+  
   const handleIncomingData = () => {
     let newCat: any = null; // Initialize to avoid undefined errors
 
     switch (params.type) {
-      case "men/beauty":
-        newCat = data.beauty;
+      case "men":
+        newCat = data;
         break;
       case "women":
-        newCat = data.fashion;
-        break;
-      case "cosmetics":
-        newCat = data.lifestyle;
+        newCat = data2;
         break;
       default:
         console.warn("Unknown category:", params.type);
@@ -40,15 +49,19 @@ const Page = () => {
     if (!params.type) return;
 
     handleIncomingData();
-  }, []);
+  }, [params.type]);
+
+  useEffect(() => {
+    if (type && idee) return;
+    setCatCustomLayout(false);
+  }, [type, idee, path]);
 
   return (
     <div className="w-full">
       <div className="container">
         <div className="w-full flex flex-col gap-12 py-24">
-          
-            {/* Header and see all Component */}
-            <HeaderSeeAll
+          {/* Header and see all Component */}
+          <HeaderSeeAll
             wordOne="Top"
             wordTwo="Deals"
             link=""
@@ -57,96 +70,41 @@ const Page = () => {
 
           {/* Grid container */}
           <div className="grid grid-cols-4 gap-6">
-            {categories && categories.topDeals ?
-              categories.topDeals.map((item: any) => (
-                <ItemCard
-                  key={item.id}
-                  title={item.name}
-                  price={item.price}
-                  image={item.images[0]}
-                  id={item.id}
-                />
-              )) : (
-                <div className="w-full grid grid-cols-4 gap-6">
-                          {
-                            [1, 2, 3, 4].map((number, idx: number) => (
-                              <div
-                                key={idx}
-                                className="w-full aspect-[1.01] overflow-hidden bg-yellow-400 rounded-[20px] relative"
-                              >
-                                <Image
-                                  src={empty}
-                                  alt={`empty state for picture ${number}`}
-                                  loading="lazy"
-                                  className="w-full object-cover"
-                                />
-                              </div>
-                            ))
-                          }
-                        </div>  
-              )}
-          </div>
-        {/* </div> */}
-
-          {categories && categories.catalogue
-            ? categories.catalogue.map((item: any) => (
-                <div className="w-full flex flex-col gap-10">
-                  <BlackHeaderSeeAll
+            {categories && categories.topDeals
+              ? categories.topDeals.map((item: any, idx: number) => (
+                  <ItemCard
+                    key={idx}
                     title={item.name}
-                    link={"/"}
-                    linkWord={"See All"}
+                    price={item.price}
+                    image={item.images[0]}
+                    id={item.id}
                   />
-
-                  <div className="w-full grid grid-cols-4 gap-6">
-                    {item.products
-                      ? item.products.map((product:any) => (
-                          <ItemCard
-                            key={product.id}
-                            title={product.name}
-                            price={product.price}
-                            image={product.images[0]}
-                            id={product.id}
-                          />
-                        ))
-                      : (
-                        <div className="w-full grid grid-cols-4 gap-6">
-                          {
-                            [1, 2, 3, 4].map((number, idx: number) => (
-                              <div
-                                key={idx}
-                                className="w-full aspect-[1.01] overflow-hidden bg-yellow-400 rounded-[20px] relative"
-                              >
-                                <Image
-                                  src={empty}
-                                  alt={`empty state for picture ${number}`}
-                                  loading="lazy"
-                                  className="w-full object-cover"
-                                />
-                              </div>
-                            ))
-                          }
-                        </div>
-                      )}
-                  </div>
-                </div>
-              ))
-            : [1, 2, 3, 4].map((number, idx: number) => (
-                <div
-                  key={idx}
-                  className="w-full aspect-[1.01] overflow-hidden bg-yellow-400 rounded-[20px] relative"
-                >
-                  <Image
-                    src={empty}
-                    alt={`empty state for picture ${number}`}
-                    loading="lazy"
-                    className="w-full object-cover"
+                ))
+              : // <div className="w-full grid grid-cols-4 gap-6">
+                // {
+                [1, 2, 3, 4].map((number, idx: number) => (
+                  <div
+                    key={idx}
+                    className="w-full animate-pulse aspect-[1.01] overflow-hidden bg-borderGrey2 rounded-[20px] relative"
                   />
-                </div>
-              ))}
+                ))
+                // }
+                // </div>
+            }
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+
+const Page = () => {
+  return (
+    <Suspense fallback={<Loading/>}>
+      <TypePage/>
+    </Suspense>
+  )
+}
 
 export default Page;
