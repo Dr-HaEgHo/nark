@@ -5,7 +5,7 @@ import { featuredProducts } from "@/constants/data";
 
 const FeaturedProducts = () => {
   return (
-    <div className="w-full py-[72px]">
+    <div className="w-full py-0 lg:py-[72px] max-md:px-4 max-lg:px-6">
       <div className="container">
         <div className="w-full flex flex-col gap-12">
           {/* Header and see all Component */}
@@ -17,7 +17,7 @@ const FeaturedProducts = () => {
           />
 
           {/* Grid container */}
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts &&
               featuredProducts.map((item, idx:number) => (
                 <ItemCard

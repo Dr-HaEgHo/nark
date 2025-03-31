@@ -13,17 +13,20 @@ import CatItemCard from "@/components/shared/CatItemCard";
 import HeaderSeeAll from "@/components/shared/HeaderSeeAll";
 import { GlobalContext } from "@/context/context";
 import Loading from "@/app/Loading";
+import Link from "next/link";
+import Button from "@/components/shared/Button";
+import { FiArrowRight } from "react-icons/fi";
 
 const TypePage = () => {
   const params = useParams();
-  const path = usePathname()
+  const path = usePathname();
   const search = useSearchParams();
   const type = new URLSearchParams(search).get("type");
   const idee = new URLSearchParams(search).get("id");
-  
-  const { subCat, categories, setCatCustomLayout, setCategories } = useContext(GlobalContext);
-  
-  
+
+  const { subCat, categories, setCatCustomLayout, setCategories } =
+    useContext(GlobalContext);
+
   const handleIncomingData = () => {
     let newCat: any = null; // Initialize to avoid undefined errors
 
@@ -57,7 +60,7 @@ const TypePage = () => {
   }, [type, idee, path]);
 
   return (
-    <div className="w-full">
+    <div className="w-full max-md:px-4 max-lg:px-5">
       <div className="container">
         <div className="w-full flex flex-col gap-12 py-24">
           {/* Header and see all Component */}
@@ -69,28 +72,41 @@ const TypePage = () => {
           />
 
           {/* Grid container */}
-          <div className="grid grid-cols-4 gap-6">
-            {categories && categories.topDeals
-              ? categories.topDeals.map((item: any, idx: number) => (
-                  <ItemCard
-                    key={idx}
-                    title={item.name}
-                    price={item.price}
-                    image={item.images[0]}
-                    id={item.id}
-                  />
-                ))
-              : // <div className="w-full grid grid-cols-4 gap-6">
-                // {
-                [1, 2, 3, 4].map((number, idx: number) => (
-                  <div
-                    key={idx}
-                    className="w-full animate-pulse aspect-[1.01] overflow-hidden bg-borderGrey2 rounded-[20px] relative"
-                  />
-                ))
-                // }
-                // </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {
+              categories && categories.topDeals
+                ? categories.topDeals.map((item: any, idx: number) => (
+                    <ItemCard
+                      key={idx}
+                      title={item.name}
+                      price={item.price}
+                      image={item.images[0]}
+                      id={item.id}
+                    />
+                  ))
+                : // <div className="w-full grid grid-cols-4 gap-6">
+                  // {
+                  [1, 2, 3, 4].map((number, idx: number) => (
+                    <div
+                      key={idx}
+                      className="w-full animate-pulse aspect-[1.01] overflow-hidden bg-borderGrey2 rounded-[20px] relative"
+                    />
+                  ))
+              // }
+              // </div>
             }
+          </div>
+
+          <div className="w-full max-md:px-4 max-lg:px-6 block lg:hidden">
+            <Link href="/">
+              <Button
+                text="See All"
+                icon={<FiArrowRight size={18} color="white" />}
+                className="!rounded=full w-full max-w-[400px] px-5 mt-3 text-base justify-center flex-row-reverse"
+                theme="dark"
+                type="fill"
+              />
+            </Link>
           </div>
         </div>
       </div>
@@ -98,13 +114,12 @@ const TypePage = () => {
   );
 };
 
-
 const Page = () => {
   return (
-    <Suspense fallback={<Loading/>}>
-      <TypePage/>
+    <Suspense fallback={<Loading />}>
+      <TypePage />
     </Suspense>
-  )
-}
+  );
+};
 
 export default Page;

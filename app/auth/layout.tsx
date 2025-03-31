@@ -21,7 +21,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
             <ImageComponent />
           </div>
 
-          <div className="w-[35%] rounded-[20px] py-14 px-20 bg-background">
+          <div className="w-[35%] lg:min-w-[546px] rounded-[20px] py-14 px-[70px]  bg-background">
            { children }
           </div>
         </div>

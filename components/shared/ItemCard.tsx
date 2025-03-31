@@ -14,9 +14,8 @@ interface Props {
 
 const ItemCard: FC<Props> = ({ title, price, image, id }) => {
 
-  const router = useRouter()
+  const router = useRouter();
   const path = usePathname();
-
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -61,7 +60,7 @@ const ItemCard: FC<Props> = ({ title, price, image, id }) => {
       <div className="flex flex-col gap-2">
         <p className="text-2xl font-medium leading-[24px]">{title ?? 'Product Name'}</p>
         <p className="text-2xl font-medium leading-[24px] text-priceGreen">
-          { price ?? '$960'}
+          ${ price ?? '960'}
         </p>
       </div>
     </div>

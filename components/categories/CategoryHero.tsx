@@ -26,16 +26,17 @@ const CategoryHero: FC<Props> = ({ data }) => {
   
 
   return (
-    <div className="w-full relative">
+    <div className="w-full relative max-md:px-4 max-lg:px-5">
       <div className="container relative z-10"> 
         <div className="w-full">
           {/* BUTTONS AND TEXT */}
-          <div className="flex flex-col items-center pt-[92px]">
-            <div className="w-full flex items-center justify-center gap-4">
+          <div className="flex flex-col items-center pt-12 lg:pt-[92px]">
+            <div className="w-full flex items-center flex-col lg:flex-row justify-center gap-1 lg:gap-4">
               {categoryLinks &&
-                categoryLinks.map((link) => (
+                categoryLinks.map((link, idx:number) => (
                   <Button
-                    text={link.title}
+                    key={idx}
+                    text={`${link.title}'s Fashion`}
                     cta={() => routeItems(link.route)}
                     // icon={<FiArrowRight size={18} color="white" />}
                     className="!rounded=full w-fit hoverActiveScale2 cursor-pointer px-5 mt-3 text-base justify-center flex-row-reverse"
@@ -45,14 +46,14 @@ const CategoryHero: FC<Props> = ({ data }) => {
                 ))}
             </div>
 
-            <h1 className="text-[40px] playfair italic leading-[100%] font-medium text-center py-24">
+            <h1 className="text-[40px] playfair italic leading-[100%] font-medium text-center py-12 lg:py-24">
               Categories
             </h1>
           </div>
 
           <div className="w-full mb-15">
             {data && data.beauty
-              ? (<div className="w-full grid grid-cols-3 items-end gap-6">
+              ? (<div className="w-full grid grid-cols-1 lg:grid-cols-3 items-center gap-6">
                   <Link
                     href={`/categories/${path.split("/")[2]}/${data.fashion.title.toLowerCase()}`}
                     className="w-full aspect-[1.49] overflow-hidden bg-yellow-400 rounded-[20px] relative"

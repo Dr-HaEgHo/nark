@@ -1,0 +1,1 @@
+export const customerToken = "shp_667f6dce-3b7c-42c8-9280-34034d87b142"

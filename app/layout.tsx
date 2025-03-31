@@ -6,6 +6,7 @@ import Newsletter from "@/components/shared/Newsletter";
 import Footer from "@/components/shared/Footer";
 import { useContext } from "react";
 import { GlobalContext, GlobalContextProvider } from "@/context/context";
+import Cart from "@/components/shared/Cart";
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <GlobalContextProvider>
+          <Cart/>
           {customLayout === false && <Navbar />}
           {children}
           {customLayout === false && <Newsletter />}

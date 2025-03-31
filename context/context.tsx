@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import React, {
   createContext,
   SetStateAction,
@@ -25,6 +26,12 @@ interface ContextProps {
   setCategories: Dispatch<SetStateAction<any | null>>;
   subCat: any | null;
   setSubCat: Dispatch<SetStateAction<any | null>>;
+  user: any | null;
+  setUser: Dispatch<SetStateAction<any | null>>;
+  token: string | null;
+  setToken: Dispatch<SetStateAction<string | null>>;
+  isSubscribed: boolean;
+  setIsSubscribed: Dispatch<SetStateAction<boolean>>;
 }
 
 export const GlobalContext = createContext<ContextProps>({
@@ -38,6 +45,12 @@ export const GlobalContext = createContext<ContextProps>({
   setCategories: (): any => null,
   subCat: null,
   setSubCat: (): any => null,
+  user: null,
+  setUser: (): any | null => null,
+  token: null,
+  setToken: (): string | null => null,
+  isSubscribed: false,
+  setIsSubscribed: () : boolean => false,
 });
 
 export const GlobalContextProvider = ({
@@ -51,6 +64,36 @@ export const GlobalContextProvider = ({
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [categories, setCategories] = useState<any>(null);
   const [subCat, setSubCat] = useState<any>(null);
+  const [ user, setUser ] = useState<any | null>(null);
+  const [ token, setToken ] = useState<any | null>(null);
+  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+  
+
+  const path = usePathname()
+  const localToken = localStorage.getItem('ACCESS_TOKEN');
+  const localUser = JSON.parse(localStorage.getItem('SHOPIFY_USER') as string)
+
+  const setLocalRoute = () => {
+    console.log("this is the path: ", path)
+  }
+
+  const checkTokenAndValidate = () => {
+    if(localToken){
+      setToken(localToken)
+    }
+
+    if(localUser){
+      setUser(localUser)
+    }
+  }
+
+  useEffect(() => {
+    checkTokenAndValidate();
+  }, [])
+
+  useEffect(() => {
+    checkTokenAndValidate();
+  }, [path])
 
   return (
     <GlobalContext.Provider
@@ -67,6 +110,13 @@ export const GlobalContextProvider = ({
         setCategories,
         subCat,
         setSubCat,
+        user,
+        setUser,
+        token, 
+        setToken, 
+        isSubscribed, 
+        setIsSubscribed
+        
       }}
     >
       {children}

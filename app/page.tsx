@@ -4,20 +4,16 @@ import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Hero from "@/components/home/Hero";
 import NewArrivals from "@/components/home/NewArrivals";
 import { GlobalContext } from "@/context/context";
-import { ShopifyProductsResponse } from "@/types";
+import { getAllProducts } from "@/utils/queries";
 import client from "@/utils/StorefrontInit";
-import { ClientResponse } from "@shopify/storefront-api-client";
-import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
-
 
 export default function Home() {
   const [products, setProducts] = useState<
     { id: string; title: string; description: string; image: string }[]
   >([]);
 
-  const { setCustomLayout } = useContext(GlobalContext)
-
+  const { setCustomLayout } = useContext(GlobalContext);
 
   const fetchData = async () => {
     try {
@@ -73,34 +69,9 @@ export default function Home() {
 
     try {
       while (hasNextPage) {
-        const query = `
-          query getAllProducts($first: Int!, $after: String) {
-            products(first: $first, after: $after) {
-              edges {
-                node {
-                  id
-                  title
-                  description
-                  images(first: 1) {
-                    edges {
-                      node {
-                        url
-                      }
-                    }
-                  }
-                }
-                cursor
-              }
-              pageInfo {
-                hasNextPage
-                endCursor
-              }
-            }
-          }
-        `;
-
+        
         const variables = { first: 50, after: cursor };
-        const data: any = await client.request(query, {
+        const data: any = await client.request(getAllProducts, {
           variables,
         });
 
@@ -117,7 +88,7 @@ export default function Home() {
         hasNextPage = data.data.products.pageInfo.hasNextPage;
         cursor = data.data.products.pageInfo.endCursor;
       }
-      
+
       setProducts(allProducts);
       console.log("Total Products Fetched:", products);
     } catch (error) {
@@ -131,16 +102,16 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
-    setCustomLayout(false)
+    setCustomLayout(false);
     // fetchAllProducts()
   }, []);
 
   return (
     <>
-      <Hero/>
-      <NewArrivals/>
-      <BrowseCollections/>
-      <FeaturedProducts/>
+      <Hero />
+      <NewArrivals />
+      <BrowseCollections />
+      <FeaturedProducts />
     </>
   );
 }
