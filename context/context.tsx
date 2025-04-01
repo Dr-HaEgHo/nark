@@ -53,7 +53,7 @@ export const GlobalContext = createContext<ContextProps>({
   setIsSubscribed: () : boolean => false,
 });
 
-export const GlobalContextProvider = ({
+const GlobalContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -69,9 +69,9 @@ export const GlobalContextProvider = ({
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
   
 
-  const path = usePathname()
-  const localToken = localStorage.getItem('ACCESS_TOKEN');
-  const localUser = JSON.parse(localStorage.getItem('SHOPIFY_USER') as string)
+  const path = usePathname() 
+  const localToken = window ? window.localStorage.getItem('ACCESS_TOKEN') : null;
+  const localUser = window ? JSON.parse(localStorage.getItem('SHOPIFY_USER') as string) : null;
 
   const setLocalRoute = () => {
     console.log("this is the path: ", path)
@@ -123,5 +123,7 @@ export const GlobalContextProvider = ({
     </GlobalContext.Provider>
   );
 };
+
+export default GlobalContextProvider
 
 // export const useGlobalContext = useContext(GlobalContext);

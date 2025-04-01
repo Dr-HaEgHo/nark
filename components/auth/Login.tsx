@@ -37,6 +37,9 @@ const Login = () => {
 
       const response = data.customerAccessTokenCreate;
 
+      if(!window){
+        return;
+      }
       // Handle Errors
       if (response.customerUserErrors.length > 0) {
         console.error("Shopify Errors:", response.customerUserErrors);
@@ -47,7 +50,7 @@ const Login = () => {
       // Store Token
       if (response.customerAccessToken) {
         setToken(response.customerAccessToken.accessToken);
-        localStorage.setItem(
+        window.localStorage.setItem(
           "ACCESS_TOKEN",
           JSON.stringify(response.customerAccessToken.accessToken)
         );

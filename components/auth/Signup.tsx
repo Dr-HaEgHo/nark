@@ -74,11 +74,15 @@ const Signup = () => {
             return
           }
 
+          if(!window){
+            return
+          }
+
           if(data.customerCreate === null || data.customerCreate.customer === null){
             console.log("not yet, we're on the way")
           }else {
             setUser(data.customerCreate.customer)
-            localStorage.setItem('SHOPIFY_USER', JSON.stringify(data.customerCreate.customer))
+            window.localStorage.setItem('SHOPIFY_USER', JSON.stringify(data.customerCreate.customer))
             // createToken();
           }
         }
