@@ -16,7 +16,7 @@ const HeaderSeeAll: FC<Props> = ({ wordOne, wordTwo, link, linkWord }) => {
       </h3>
       <Link href={link ?? "/"}  className="hidden lg:block text-base font-medium text-seeText">
         {" "}
-        {linkWord ?? "See All"}
+        {linkWord}
       </Link>
     </div>
   );

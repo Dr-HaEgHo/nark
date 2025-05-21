@@ -45,9 +45,8 @@ const TypePage = () => {
         break;
       case "women":{
         newCat = data2;
-        // fetchCollection("women-top-deals")
-        fetchCollections(["women-top-deals", "men-top-deals"])
-        
+        fetchCollection("women-top-deals")
+        // fetchCollections(["women-top-deals", "men-top-deals"])
       }
         break;
       default:
@@ -72,6 +71,10 @@ const TypePage = () => {
     setCatCustomLayout(false);
   }, [type, idee, path]);
 
+  useEffect(() => {
+    console.log("COLLECTION CATEGORIES:::::", collection)
+  }, [])
+
   return (
     <div className="w-full max-md:px-4 max-lg:px-5">
       <div className="container">
@@ -81,7 +84,7 @@ const TypePage = () => {
             wordOne="Top"
             wordTwo="Deals"
             link=""
-            linkWord="See All"
+            // linkWord="See All"
           />
 
           {/* Grid container */}
@@ -102,15 +105,15 @@ const TypePage = () => {
               ))
             ) : (
               <div className="w-full h-[100px] flex items-center justify-center">
-                <p className="text-base font-normal text-deleteGrey">
-                  Error loading products
+                <p className="text-base font-normal text-deleteGrey text-center">
+                  Error loading products...
                 </p>
               </div>
             )}
           </div>
 
           <div className="w-full max-md:px-4 max-lg:px-6 block lg:hidden">
-            <Link href="/">
+            {/* <Link href="/">
               <Button
                 text="See All"
                 icon={<FiArrowRight size={18} color="white" />}
@@ -118,7 +121,7 @@ const TypePage = () => {
                 theme="dark"
                 type="fill"
               />
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

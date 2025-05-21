@@ -22,7 +22,7 @@ const Hero = () => {
               <span className="playfair italic">Level Up</span> Your Style{" "}
               <br className="hidden lg:block"/> with Our Collections
             </h1>
-            <Link href="/auth">
+            <Link href="/auth/signup">
             <Button
               text="Start Shopping"
               icon={<FiArrowRight size={18} color="white" />}

@@ -8,6 +8,10 @@ import Image from "next/image";
 import { empty } from "@/assets/images";
 import BlackHeaderSeeAll from "@/components/shared/BlackHeaderSeeAll";
 import ItemCard from "@/components/shared/ItemCard";
+import { useCollectionByHandle } from "@/hooks/useCollectionByHandle";
+import ItemCardLoading from "@/components/shared/ItemCardLoading";
+import Button from "@/components/shared/Button";
+import { showLowestPrice } from "@/constants/functions";
 
 const SubCategoryPage = () => {
   const path = usePathname();
@@ -17,6 +21,9 @@ const SubCategoryPage = () => {
 
   const { subCat, setSubCat, categories, setCategories, setCatCustomLayout } =
     useContext(GlobalContext);
+  const { collection, fetchCollection, loading, error } =
+    useCollectionByHandle();
+  const [header, setHeader] = useState<string>("");
 
   // console.log("this is the type", idee)
 
@@ -25,10 +32,16 @@ const SubCategoryPage = () => {
 
     switch (type) {
       case "men":
-        newCat = data;
+        {
+          // setQuery("men");
+          newCat = data;
+        }
         break;
       case "women":
-        newCat = data2;
+        {
+          // setQuery("women");
+          newCat = data2;
+        }
         break;
       default:
         console.warn("Unknown category:", params.type);
@@ -51,14 +64,24 @@ const SubCategoryPage = () => {
     switch (params.subtype) {
       case "fashion":
         {
+          fetchCollection(`${type}-fashion`);
+          setHeader(`${type} fashion`)
           newCat = categories.fashion;
         }
         break;
       case "beauty":
-        newCat = categories.beauty;
+        {
+          fetchCollection(`${type}-beauty`);
+          setHeader(`${type} beauty`)
+          newCat = categories.beauty;
+        }
         break;
       case "lifestyle":
-        newCat = categories.lifestyle;
+        {
+          fetchCollection(`${type}-lifestyle`);
+          setHeader(`${type} lifestyle`)
+          newCat = categories.lifestyle;
+        } 
         break;
       default:
         console.warn("Unknown category:", path);
@@ -77,9 +100,7 @@ const SubCategoryPage = () => {
     if (categories === null) {
       handleTypeData();
     }
-    {
-      handleIncomingData();
-    }
+    handleIncomingData();
 
     console.log("this is the path", categories);
   }, [categories, path]);
@@ -89,12 +110,52 @@ const SubCategoryPage = () => {
     setCatCustomLayout(false);
   }, [type, idee, path]);
 
+  console.log("MEN FASHION SUCCESS::::::", collection);
+
   return (
     <div className="w-full">
       <div className="container">
         <div className="w-full">
-          {subCat && subCat.catalogue ? (
-            subCat.catalogue.map((item: any, idx:number) => (
+          {loading ? (
+            <div className="w-full grid grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((number, idx: number) => (
+                <ItemCardLoading key={idx} />
+              ))}
+            </div>
+          ) : collection !== null &&
+            collection !== undefined &&
+            collection.length ? (
+            <>
+              <BlackHeaderSeeAll title={header} />
+              <div className="w-full grid grid-cols-4 gap-6 mt-10">
+                {collection.map((item: any, idx: number) => (
+                  <ItemCard
+                    key={idx}
+                    title={item.node.title}
+                    price={showLowestPrice(item.node.variants.edges)}
+                    image={
+                      item.node.images !== null
+                        ? item.node.images?.edges[0]?.node.url
+                        : "" 
+                    }
+                    id={item.node.id}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="w-full flex items-center justify-center flex-col">
+              Couldn't fetch collection
+              <Button
+                text="Refresh"
+                className="w-fit pl-6"
+                type="fill"
+                theme="dark"
+              />
+            </div>
+          )}
+          {/* {subCat && subCat.catalogue ? (
+            subCat.catalogue.map((item: any, idx: number) => (
               <div key={idx} className="w-full mt-14 flex flex-col gap-10">
                 <BlackHeaderSeeAll
                   title={item.name}
@@ -149,7 +210,7 @@ const SubCategoryPage = () => {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>
