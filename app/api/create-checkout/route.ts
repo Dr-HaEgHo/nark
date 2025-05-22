@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import client, { admin, adminClient } from '@/utils/StorefrontInit';
+import client from '@/utils/StorefrontInit';
 
 const mutation = `
   mutation checkoutCreate($input: CheckoutCreateInput!) {

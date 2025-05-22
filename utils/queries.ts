@@ -44,6 +44,45 @@ export const getAllProducts = gql`
   }
 `;
 
+// utils/queries/getProductById.ts
+export const getProductById = gql`
+  query getProductById($id: ID!) {
+    product(id: $id) {
+      id
+      title
+      description
+      images(first: 5) {
+        edges {
+          node {
+            url
+            altText
+          }
+        }
+      }
+      variants(first: 10) {
+        edges {
+          node {
+            id
+            title
+            sku
+            availableForSale
+            priceV2 {
+              amount
+              currencyCode
+            }
+            sku
+            availableForSale
+            image {
+              src
+              altText
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 // export const getCollection = gql`
 //   query {
 //     collection(

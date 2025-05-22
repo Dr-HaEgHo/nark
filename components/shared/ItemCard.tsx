@@ -62,7 +62,7 @@ const ItemCard: FC<Props> = ({ title, price, image, id }) => {
       <div className="flex flex-col items-start gap-2">
         <button onClick={() => router.push(`/categories/product?id=${id}`)} className="transition duration-200 text-base text-left font-medium cursor-pointer leading-[24px] hover:opacity-60 active:opacity-50 line-clamp-2 overflow-ellipsis">{title ?? 'Product Name'}</button>
         <p className="text-base font-medium leading-[24px] text-priceGreen">
-          { price ? `$${price}` : ''}
+          from  { price ? `$${price}` : ''}
         </p>
       </div>
     </button>

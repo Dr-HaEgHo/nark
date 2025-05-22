@@ -13,28 +13,28 @@ export default function Home() {
 
   const { setCustomLayout } = useContext(GlobalContext);
 
-  // const handleCheckout = async () => {
-  //   const res = await fetch('/api/create-checkout', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       lineItems: [
-  //         {
-  //           variantId: "gid://shopify/ProductVariant/42553733742675",
-  //           quantity: 1,
-  //         },
-  //       ],
-  //     }),
-  //   });
+  const handleCheckout = async () => {
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        lineItems: [
+          {
+            variantId: "gid://shopify/ProductVariant/42691486974035",
+            quantity: 1,
+          },
+        ],
+      }),
+    });
 
-  //   const data = await res.json();
+    const data = await res.json();
 
-  //   if (data.checkout?.webUrl) {
-  //     window.location.href = data.checkout.webUrl;
-  //   }
-  // };
+    if (data.checkout?.webUrl) {
+      window.location.href = data.checkout.webUrl;
+    }
+  };
 
 
   const fetchAllProducts = async () => {
@@ -88,7 +88,7 @@ export default function Home() {
   return (
     <>
       {/* <button onClick={fetchAllProducts} className="py-2 cursor-pointer px-6 bg-black text-white ">Fetch Variants</button> */}
-      {/* <button onClick={handleCheckout} className="py-2 cursor-pointer px-6 bg-black text-white ">Checkout</button> */}
+      <button onClick={handleCheckout} className="py-2 cursor-pointer px-6 bg-black text-white ">Checkout</button>
       {/* <button
         onClick={() => getCollectionByHandle("gid://shopify/Collection/292794826835")}
         className="py-2 cursor-pointer px-6 bg-black text-white "
