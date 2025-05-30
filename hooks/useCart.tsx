@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import client from "@/utils/StorefrontInit";
-import { CREATE_CART, ADD_TO_CART } from "@/utils/queries";
+import { createCart, addToCart as addCart } from "@/utils/queries";
 
 export const useShopifyCart = () => {
   const [cartId, setCartId] = useState<string | null>(null);
@@ -18,7 +18,7 @@ export const useShopifyCart = () => {
     try {
       if (!cartId) {
         // No cart yet — create a new one
-        const res = await client.request(CREATE_CART, {
+        const res = await client.request(createCart, {
           variables: {
             lines: [{ merchandiseId: variantId, quantity }],
           }
@@ -29,7 +29,7 @@ export const useShopifyCart = () => {
         console.log("this is the cart response", res)
       } else {
         // Cart exists — just add item
-        const res = await client.request(ADD_TO_CART, {
+        const res = await client.request(addCart, {
           variables:{
             cartId,
             lines: [{ merchandiseId: variantId, quantity }],
