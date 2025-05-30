@@ -4,6 +4,7 @@ import HeaderSeeAll from "../shared/HeaderSeeAll";
 import { featuredProducts } from "@/constants/data";
 import { useCollectionByHandle } from "@/hooks/useCollectionByHandle";
 import ItemCardLoading from "../shared/ItemCardLoading";
+import { showLowestPrice } from "@/constants/functions";
 
 const FeaturedProducts = () => {
 
@@ -36,7 +37,7 @@ const FeaturedProducts = () => {
                 <ItemCard
                   key={idx}
                   title={item.node.title}
-                  price={item.node.price}
+                  price={showLowestPrice(item.node.variants.edges)}
                   image={item.node.images !== null ? item.node.images?.edges[0]?.node.url : ""}
                   id={item.node.id}
                 />

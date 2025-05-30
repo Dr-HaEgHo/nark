@@ -18,7 +18,7 @@ const ItemCard: FC<Props> = ({ title, price, image, id }) => {
   const path = usePathname();
 
   return (
-    <button className="w-full flex flex-col gap-4 ">
+    <button onClick={() => router.push(`/categories/product?id=${id}`)} className="w-full flex flex-col gap-4 ">
       <div className="aspect-[0.83] bg-[#e2e2e2] card rounded-[15px] overflow-hidden relative">
         <Image
           src={image ?? ""}
@@ -60,7 +60,7 @@ const ItemCard: FC<Props> = ({ title, price, image, id }) => {
       </div>
 
       <div className="flex flex-col items-start gap-2">
-        <button onClick={() => router.push(`/categories/product?id=${id}`)} className="transition duration-200 text-base text-left font-medium cursor-pointer leading-[24px] hover:opacity-60 active:opacity-50 line-clamp-2 overflow-ellipsis">{title ?? 'Product Name'}</button>
+        <button className="transition duration-200 text-base text-left font-medium cursor-pointer leading-[24px] hover:opacity-60 active:opacity-50 line-clamp-2 overflow-ellipsis">{title ?? 'Product Name'}</button>
         <p className="text-base font-medium leading-[24px] text-priceGreen">
           from  { price ? `$${price}` : ''}
         </p>

@@ -87,6 +87,21 @@ body {
   font-optical-sizing: auto;
 }
 
+.scroll-vertical {
+  overflow-y: scroll;
+}
+
+.scroll-vertical::-webkit-scrollbar {
+  width: 12px;
+  background: #00000016;
+}
+
+.scroll-vertical::-webkit-scrollbar-thumb {
+  width: 12px;
+  background: #000;
+  border-radius: 100px;
+}
+
 .container {
   @apply w-full lg:w-[86%] max-w-[1240px] mx-auto 
 }
@@ -202,6 +217,16 @@ body {
   animation: slide-out .3s ease-in none;
 }
 
+.sliderOpen {
+  @apply w-full h-screen bg-gray-200 top-[0%] z-[999] fixed left-0;
+  animation: slide-in-vert .3s ease-in none;
+}
+
+.sliderClose {
+  @apply w-full h-screen bg-gray-200 z-[999] -top-[100%] fixed left-0;
+  animation: slide-out-vert .3s ease-in none;
+}
+
 @keyframes slide-in {
   from{
     opacity: 0;
@@ -221,6 +246,28 @@ body {
   to{
     opacity: 0;
     right: -500px
+  }
+}
+
+@keyframes slide-in-vert {
+  from{
+    opacity: 0;
+    top: -100%;
+  } 
+  to{
+    opacity: 1;
+    top: 0%
+  }
+}
+
+@keyframes slide-out-vert {
+  from{
+    opacity: 1;
+    top: 0%;
+  } 
+  to{
+    opacity: 0;
+    right: 100%
   }
 }
 

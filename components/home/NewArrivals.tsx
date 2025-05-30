@@ -11,6 +11,7 @@ import { getCollectionByHandle } from "@/utils/queries";
 import { GlobalContext } from "@/context/context";
 import ItemCardLoading from "../shared/ItemCardLoading";
 import { useCollectionByHandle } from "@/hooks/useCollectionByHandle";
+import { showLowestPrice } from "@/constants/functions";
 
 const NewArrivals = () => {
   const [products, setProducts] = useState<any | null>(null);
@@ -52,7 +53,7 @@ const NewArrivals = () => {
                 <ItemCard
                   key={idx}
                   title={item.node.title}
-                  price={item.node.price}
+                  price={showLowestPrice(item.node.variants.edges)}
                   image={item.node.images !== null ? item.node.images?.edges[0]?.node.url : ""}
                   id={item.node.id}
                 />

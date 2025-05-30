@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "./Button";
 import { FiArrowRight } from "react-icons/fi";
 import {
@@ -10,16 +10,25 @@ import { IoMdAdd } from "react-icons/io";
 import Image from "next/image";
 import { image2 } from "@/assets/images";
 import { GlobalContext } from "@/context/context";
+import client from "@/utils/StorefrontInit";
+import { getCartById } from "@/utils/queries";
 
 const CartItem = () => {
+  const { cartOpen, setCartOpen } = useContext(GlobalContext);
+  const [ fetch, setFetch ] = useState<boolean>(false);
 
-  const { setCartOpen } = useContext(GlobalContext);
 
+  
 
   return (
     <div className="w-full flex items-center gap-4">
       <div className="w-[15%] bg-yellow-500 aspect-[0.7]">
-        <Image src={image2} alt="clithing product" loading="lazy" className="w-full h-full object-cover" />
+        <Image
+          src={image2}
+          alt="clithing product"
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
       </div>
 
       <div className="flex-[1] flex flex-col gap-[10px]">
@@ -46,7 +55,7 @@ const CartItem = () => {
             <p className="text-redOff text-xs font-normal"> (30% off)</p>
           </div>
 
-        {/* ADD / REMOVE ITEM FROM CART */}
+          {/* ADD / REMOVE ITEM FROM CART */}
           <div className="w-fit flex items-center gap-4 px-2 py-[10px] border border-borderGrey2">
             <button className="hoverActiveGrey px-1 py-1">
               <RiSubtractLine />
@@ -63,25 +72,55 @@ const CartItem = () => {
 };
 
 const Cart = () => {
+  const { cartOpen, setCartOpen } = useContext(GlobalContext);
+  const [ loading, setLoading ] = useState<boolean>(false)
 
-  const {cartOpen, setCartOpen} = useContext(GlobalContext)
+  const fetchCart = async () => {
+    const cartId = localStorage.getItem("narkCartId");
+    if (!cartId) return;
+    
+    setLoading(true);
+    try {
+      const res = client.request(getCartById, {
+        variables: { cartId },
+      });
+      
+      console.log("GET CART BY ID SUCCESS:::::::", res);
+      setLoading(false);
+    } catch (err) {
+      console.log("GET CART BY ID ERROR:::::::", err);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (cartOpen === true) {
+      fetchCart();
+    }
+  }, [cartOpen]);
 
   return (
-    <div className={cartOpen ? 'cartOpen' : "cartClose"}>
-      <div  className={cartOpen ? 'drawerOpen' : "drawerClose"}>
+    <div className={cartOpen ? "cartOpen" : "cartClose"}>
+      <div className={cartOpen ? "drawerOpen" : "drawerClose"}>
         <div className="w-full px-5 py-2">
           <div className="w-full flex items-center justify-end">
-            <button onClick={() => {
-              setCartOpen(!cartOpen)
-            }} className="mb-6 hoverActiveGrey p-1">
+            <button
+              onClick={() => {
+                setCartOpen(!cartOpen);
+              }}
+              className="mb-6 hoverActiveGrey p-1"
+            >
               <RiCloseLargeLine size={26} />
             </button>
           </div>
           <h3 className="mb-4 text-2xl leading-[33px] font-semibold ">
             Your Cart
           </h3>
-
+              {
+                loading === true && <p>Loading...</p>
+              }
           <div className="w-full flex flex-col gap-4">
+
             <CartItem />
             <CartItem />
             <CartItem />

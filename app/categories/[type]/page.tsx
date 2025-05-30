@@ -4,21 +4,15 @@ import React, { Suspense, useContext, useEffect, useState } from "react";
 import {
   categories as data,
   categoriesWomen as data2,
-  empty,
 } from "@/constants/data";
-import Image from "next/image";
-import BlackHeaderSeeAll from "@/components/shared/BlackHeaderSeeAll";
 import ItemCard from "@/components/shared/ItemCard";
-import CatItemCard from "@/components/shared/CatItemCard";
 import HeaderSeeAll from "@/components/shared/HeaderSeeAll";
 import { GlobalContext } from "@/context/context";
 import Loading from "@/app/Loading";
-import Link from "next/link";
-import Button from "@/components/shared/Button";
-import { FiArrowRight } from "react-icons/fi";
 import { useCollectionByHandle } from "@/hooks/useCollectionByHandle";
 import ItemCardLoading from "@/components/shared/ItemCardLoading";
 import { useMultipleCollections } from "@/hooks/useMultipleCollections";
+import { showLowestPrice } from "@/constants/functions";
 
 const TypePage = () => {
   const params = useParams();
@@ -67,12 +61,12 @@ const TypePage = () => {
   }, [params.type]);
 
   useEffect(() => {
-    if (type && idee) return;
+    console.log("CHAANGE LAYOUT:::::::::::::::::::::::")
     setCatCustomLayout(false);
-  }, [type, idee, path]);
+  }, []);
 
   useEffect(() => {
-    console.log("COLLECTION CATEGORIES:::::", collection)
+    // console.log("COLLECTION CATEGORIES:::::", collection)
   }, [])
 
   return (
@@ -98,7 +92,7 @@ const TypePage = () => {
                 <ItemCard
                   key={idx}
                   title={item.node.title}
-                  price={item.node.price}
+                  price={showLowestPrice(item.node.variants.edges)}
                   image={item.node.images !== null ? item.node.images?.edges[0]?.node.url : ""}
                   id={item.node.id}
                 />

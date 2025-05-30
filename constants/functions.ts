@@ -13,6 +13,6 @@ export function getLowestPrice(products: any[]) {
 }
 
 export function showLowestPrice(products: any[]) {
-  console.log("LOWEST PRICE::::::", Math.min(...products.map(product => product.node.priceV2.amount)))
-  return Math.min(...products.map(product => product.node.priceV2.amount));
+  console.log("LOWEST PRICE::::::", Math.min(...products.map(product => product.node.priceV2 ? product.node.priceV2.amount : product.node.price.amount)))
+  return Math.min(...products.map(product => product.node.priceV2 ? product.node.priceV2.amount : product.node.price.amount));
 }

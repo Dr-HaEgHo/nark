@@ -106,7 +106,6 @@ const SubCategoryPage = () => {
   }, [categories, path]);
 
   useEffect(() => {
-    if (type && idee) return;
     setCatCustomLayout(false);
   }, [type, idee, path]);
 

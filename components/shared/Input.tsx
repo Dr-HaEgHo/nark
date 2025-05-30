@@ -19,7 +19,7 @@ const Input: FC<emailInputPropsFade> = (props) => {
         </label>
       )}
       <input
-        onChange={handleChange}
+        onChange={props?.handleChange}
         value={props?.value}
         className={`${props.inputClass} z-0 h-11 flex min-w-[260px] py-[10px] pl-[38px] text-[14px] font-normal`}
         type="text"

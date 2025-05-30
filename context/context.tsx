@@ -11,6 +11,7 @@ import React, {
   useReducer,
   useEffect,
 } from "react";
+import { BooleanSchema } from "yup";
 
 interface messageType {
   message: string;
@@ -38,6 +39,8 @@ interface ContextProps {
   setIsSubscribed: Dispatch<SetStateAction<boolean>>;
   collections: any | null;
   setCollections: Dispatch<SetStateAction<any | null>>;
+  searchOpen: boolean;
+  setSearchOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export const GlobalContext = createContext<ContextProps>({
@@ -60,7 +63,9 @@ export const GlobalContext = createContext<ContextProps>({
   isSubscribed: false,
   setIsSubscribed: () : boolean => false,
   collections: null,
-  setCollections: (): any | null => null 
+  setCollections: (): any | null => null ,
+  searchOpen: false,
+  setSearchOpen: (): boolean => false
 });
 
 const GlobalContextProvider = ({
@@ -79,6 +84,7 @@ const GlobalContextProvider = ({
   const [ token, setToken ] = useState<any | null>(null);
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
   const [ collections, setCollections ] = useState<any | null>(null);
+  const [ searchOpen, setSearchOpen] = useState<boolean>(false);
   
 
   const path = usePathname() 
@@ -131,7 +137,9 @@ const GlobalContextProvider = ({
         isSubscribed, 
         setIsSubscribed,
         collections, 
-        setCollections
+        setCollections,
+        searchOpen,
+        setSearchOpen
         
       }}
     >

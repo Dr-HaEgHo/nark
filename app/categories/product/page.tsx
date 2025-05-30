@@ -22,8 +22,10 @@ import Image from "next/image";
 import { useProductById } from "@/hooks/useProductById";
 import { useSearchParams } from "next/navigation";
 import ProductDetailsLoader from "@/components/loaders/ProductDetailsLoader";
-import ProductOverview from "@/components/product/ProductOverview";
+// import ProductOverview from "@/components/product/ProductOverview";
 import { TickCircle } from "iconsax-react";
+import client from "@/utils/StorefrontInit";
+import { addToCart } from "@/utils/queries";
 
 const Page = () => {
   const search = useSearchParams();
@@ -51,19 +53,53 @@ const Page = () => {
     console.log("the Id", id);
   };
 
-  function sumProductPrices(products: any[]): number {
-   const total = products.reduce((total: number, product: any) => total + parseFloat(product.priceV2.amount), 0);
+  function sumProductPrices(products: any[] | null): number {
+    let total;
+    if(products === null) total = 0;
     
-  //  console.log("THE PRICE CALCULATED::::::", parseFloat(total.toFixed(2)))
-   return parseFloat(total.toFixed(2))
+    total = products?.reduce(
+      (total: number, product: any) =>
+        total + parseFloat(product.priceV2.amount),
+      0
+    );
+
+    //  console.log("THE PRICE CALCULATED::::::", parseFloat(total.toFixed(2)))
+    return total ? parseFloat(total.toFixed(2)) : 0
   }
+
+  const addProductToCart = async () => {
+    const cartId = localStorage.getItem("narkCartId");
+
+    const newLines = selected.map((item: any) => ({
+      merchandiseId: item.id, // Shopify variant ID
+      quantity: 1, // you can customize this if needed
+    }));
+
+    try {
+      const res = await client.request(addToCart, {
+        variables: {
+          cartId,
+          lines: newLines,
+        },
+      });
+
+      console.log("ADD TO CART SUCCESS::::::", res);
+    } catch (err) {
+      console.error("ADD TO CART ERROR::::::", err);
+    }
+  };
 
   useEffect(() => {
     setCatCustomLayout(true);
+    setTotal(0)
   }, []);
 
   useEffect(() => {
-      setTotal(sumProductPrices(selected));
+    setTotal(sumProductPrices(null));
+  }, [product]);
+
+  useEffect(() => {
+    setTotal(sumProductPrices(selected));
     console.log("PRODUCTS OF THIS PAGE:::::::::", selected);
   }, [selected]);
 
@@ -209,7 +245,7 @@ const Page = () => {
                                 height={1024}
                                 className="w-full h-full object-cover rounded overflow-hidden"
                               />
-                              <div className="w-full h-full absolute top-0 rounded opacity-[5%] left-0 z-[999] bg-black"/>
+                              <div className="w-full h-full absolute top-0 rounded opacity-[5%] left-0 z-[999] bg-black" />
                             </div>
                             <p className="text-xs font-normal text-black ">
                               {variant.node.title}
@@ -227,8 +263,9 @@ const Page = () => {
                   <div className="w-full py-8 border-b border-borderGrey2">
                     <Button
                       text={`Add to Cart ($ ${total})`}
-                      disabled={selected.length <= 0}
+                      disabled={selected.length <= 0 ? true : false}
                       cta={() => {
+                        addProductToCart();
                         setCartOpen(true);
                       }}
                       // icon={<FiArrowRight size={18} color="white" />}
@@ -290,24 +327,26 @@ const Page = () => {
 
                   {/* Description */}
                   <div className="w-full pt-10 border-b border-borderGrey2 mb-5">
-                    {/* <p className="text-base text-foreground font-normal leading-[24px] tracking-[0.2px]">
-                  Part shirt, part jacket, all style.{product.description}
-                </p> */}
-                    {/* <p className="text-base text-foreground font-normal leading-[24px] tracking-[0.2px] mb-3">
-                  Meet your new chilly weather staple. The ReWool® Oversized
-                  Shirt Jacket has all the classic shirt detailing—collar, cuffs
-                  with buttons, and a shirttail hem, along with two front chest
-                  flap pockets and on-seam pockets. The sleeves are fully lined
-                  for added warmth and it’s made with a GRS-certified recycled
-                  Italian Wool and GRS-certified recycled nylon blend. Think
-                  cozy, comfy, and oh-so easy to layer. With the goal of
-                  increasing the use of recycled materials and reducing the
-                  harmful impacts of production, the Global Recycled Standard
-                  (GRS) sets requirements for third-party certification of
-                  recycled input in products—including chain of custody, social
-                  and environmental practices, and chemical restrictions.
-                </p> */}
-                    <ProductOverview overviewText={product.description} />
+                    <p className="text-base text-foreground font-normal leading-[24px] tracking-[0.2px]">
+                      Description
+                    </p>
+                    <p className="text-base text-foreground font-normal leading-[24px] tracking-[0.2px] mb-3">
+                      {/* Meet your new chilly weather staple. The ReWool® Oversized
+                      Shirt Jacket has all the classic shirt detailing—collar,
+                      cuffs with buttons, and a shirttail hem, along with two
+                      front chest flap pockets and on-seam pockets. The sleeves
+                      are fully lined for added warmth and it’s made with a
+                      GRS-certified recycled Italian Wool and GRS-certified
+                      recycled nylon blend. Think cozy, comfy, and oh-so easy to
+                      layer. With the goal of increasing the use of recycled
+                      materials and reducing the harmful impacts of production,
+                      the Global Recycled Standard (GRS) sets requirements for
+                      third-party certification of recycled input in
+                      products—including chain of custody, social and
+                      environmental practices, and chemical restrictions. */}
+                      {product.description}
+                    </p>
+                    {/* <ProductOverview overviewText={product.description} /> */}
 
                     <div className="w-full flex items-center justify-between py-5 border-b border-borderGrey2">
                       <p className="w-[106px] text-base text-foreground font-medium leading-[24px] tracking-[0.2px]">

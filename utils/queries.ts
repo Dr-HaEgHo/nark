@@ -376,59 +376,72 @@ export const createCheckout = gql`
   }
 `;
 
-export const CreateCart = gql`
-mutation cartCreate($input: CartInput) {
-  cartCreate(input: $input) {
-    cart {
-      # Cart fields
-    }
-    userErrors {
-      field
-      message
-    }
-    warnings {
-      # CartWarning fields
-    }
-  }
-}`;
-
-// utils/queries.ts
-
-export const CREATE_CART = gql`
-  mutation CreateCart($lines: [CartLineInput!]!) {
-    cartCreate(input: { lines: $lines }) {
+export const createCart = gql`
+  mutation {
+    cartCreate {
       cart {
         id
         checkoutUrl
-        lines(first: 10) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                }
-              }
-            }
-          }
-        }
-      }
-      userErrors {
-        field
-        message
       }
     }
   }
 `;
 
-export const ADD_TO_CART = gql`
-  mutation AddToCart($cartId: ID!, $lines: [CartLineInput!]!) {
+export const getCartById = gql`
+  query getCart($cartId: ID!) {
+    cart(id: $cartId) {
+      id
+      checkoutUrl
+      totalQuantity
+      cost {
+        subtotalAmount {
+          amount
+          currencyCode
+        }
+        totalAmount {
+          amount
+          currencyCode
+        }
+      }
+      lines(first: 10) {
+        edges {
+          node {
+            id
+            quantity
+            merchandise {
+              ... on ProductVariant {
+                id
+                title
+                price {
+                  amount
+                  currencyCode
+                }
+                product {
+                  title
+                  handle
+                  images(first: 1) {
+                    edges {
+                      node {
+                        url
+                        altText
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const addToCart = gql`
+  mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
     cartLinesAdd(cartId: $cartId, lines: $lines) {
       cart {
         id
-        checkoutUrl
         lines(first: 10) {
           edges {
             node {
@@ -444,9 +457,40 @@ export const ADD_TO_CART = gql`
           }
         }
       }
-      userErrors {
-        field
-        message
+    }
+  }
+`;
+
+export const searchProductsByName = gql`
+  query SearchProducts($searchTerm: String!) {
+    products(first: 10, query: $searchTerm) {
+      edges {
+        node {
+          id
+          title
+          description
+          handle
+          images(first: 1) {
+            edges {
+              node {
+                url
+                altText
+              }
+            }
+          }
+          variants(first: 1) {
+            edges {
+              node {
+                id
+                title
+                price {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
