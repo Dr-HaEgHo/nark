@@ -33,12 +33,26 @@ const Page = () => {
 
   const [selected, setSelected] = useState<string[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const [reviews, setReviews] = useState<any | null>(null)
 
   const { setCatCustomLayout, setCartOpen } = useContext(GlobalContext);
 
   const { product, loading, error } = useProductById(idee as string);
 
   // console.log("PARAMS OF THIS PAGE:::::::::", product);
+
+  // utils/fetchReviews.ts
+  // const fetchReviews = async (productId: string) => {
+  //   try {
+  //     const response = await fetch(
+  //       `GET https://app.judge.me/oauth/authorize?client_id=[your_client_id]&redirect_uri=[your_redirect_uri]&response_type=code&scope=[list_of_permissions_you_are_asking]&state=[state]`
+  //     );
+  //     const data = await response.json();
+  //     setReviews(data.reviews); // array of review objects
+  //   } catch (err: any) {
+  //     console.log("THE ERROR FROM THE REVIEWS")
+  //   }
+  // };
 
   const handleToggleSelectProducts = (item: any) => {
     const id = selected.map((item: any) => item.id);
@@ -55,8 +69,8 @@ const Page = () => {
 
   function sumProductPrices(products: any[] | null): number {
     let total;
-    if(products === null) total = 0;
-    
+    if (products === null) total = 0;
+
     total = products?.reduce(
       (total: number, product: any) =>
         total + parseFloat(product.priceV2.amount),
@@ -64,8 +78,10 @@ const Page = () => {
     );
 
     //  console.log("THE PRICE CALCULATED::::::", parseFloat(total.toFixed(2)))
-    return total ? parseFloat(total.toFixed(2)) : 0
+    return total ? parseFloat(total.toFixed(2)) : 0;
   }
+
+
 
   const addProductToCart = async () => {
     const cartId = localStorage.getItem("narkCartId");
@@ -84,14 +100,17 @@ const Page = () => {
       });
 
       console.log("ADD TO CART SUCCESS::::::", res);
+      setCartOpen(true);
+      setSelected([]);
     } catch (err) {
       console.error("ADD TO CART ERROR::::::", err);
     }
-  };
+  }
 
   useEffect(() => {
     setCatCustomLayout(true);
-    setTotal(0)
+    setTotal(0);
+    // fetchReviews(idee as string)
   }, []);
 
   useEffect(() => {
@@ -155,7 +174,7 @@ const Page = () => {
 
                 <div className="sticky top-4 w-full lg:w-[31%] max-lg:mt-6">
                   <h4 className="text-inputIconGrey text-2xl font-normal leading-[33px] mb-1">
-                    Men Fashion
+                    {product.collections.edges[0].node.title}
                   </h4>
                   <div className="w-full flex items-start justify-between border-b border-borderGrey2 gap-3 mb-4 pb-4">
                     <p className="text-2xl leading-[33px] font-normal text-foreground">
@@ -167,7 +186,7 @@ const Page = () => {
                   </div>
 
                   {/* stars */}
-                  <div className="w-fit flex items-center justify-start gap-[10px]">
+                  {/* <div className="w-fit flex items-center justify-start gap-[10px]">
                     <div className="flex items-center gap-1">
                       {[1, 2, 3, 4, 5].map((_, idx: number) => (
                         <TiStarFullOutline key={idx} size={14} color="black" />
@@ -176,7 +195,7 @@ const Page = () => {
                     <p className="text-xs text-inputIconGrey font-normal leading-[16px]">
                       5.0 (2 Reviews)
                     </p>
-                  </div>
+                  </div> */}
 
                   {/* colors */}
                   <div className="w-fit flex items-center gap-3 mt-[17px] mb-9">
@@ -250,8 +269,14 @@ const Page = () => {
                             <p className="text-xs font-normal text-black ">
                               {variant.node.title}
                             </p>
+
                             <p className="text-xs font-normal text-priceGreen ">
-                              $ {variant.node.priceV2.amount}
+                              <span className="line-through text-[#929292]">
+                                {" "}
+                                ${" "}
+                                {(variant.node.priceV2.amount / 0.8).toFixed(2)}
+                              </span>{" "}
+                              {"  "} $ {variant.node.priceV2.amount}
                             </p>
                           </div>
                         )
@@ -266,7 +291,6 @@ const Page = () => {
                       disabled={selected.length <= 0 ? true : false}
                       cta={() => {
                         addProductToCart();
-                        setCartOpen(true);
                       }}
                       // icon={<FiArrowRight size={18} color="white" />}
                       className="!rounded=full w-full px-5 py-[14] disabled:opacity-[60%] mt-3 text-base justify-center flex-row-reverse"
@@ -277,7 +301,7 @@ const Page = () => {
 
                   {/* SHIPPING DETAILS */}
                   <div className="w-full py-6 gap-6 flex flex-col border-b border-borderGrey2">
-                    <div className="flex gap-4 items-start">
+                    {/* <div className="flex gap-4 items-start">
                       <Image
                         src={van}
                         alt="van"
@@ -291,7 +315,7 @@ const Page = () => {
                           <a href="/">Learn more.</a>
                         </span>
                       </p>
-                    </div>
+                    </div> */}
 
                     <div className="flex gap-4 items-start">
                       <Image
@@ -303,7 +327,7 @@ const Page = () => {
                       <p className="text-sm font-medium leading-[20px] tracking-[0.42px] text-foreground">
                         Easy Returns <br />
                         <span className="text-xs text-foreground font-normal tracking-[0.2px] leading-[16px]">
-                          Extended returns through January 31.
+                          We have a solid returns policy.
                           <a href="/">Return Details</a>
                         </span>
                       </p>
@@ -348,37 +372,37 @@ const Page = () => {
                     </p>
                     {/* <ProductOverview overviewText={product.description} /> */}
 
-                    <div className="w-full flex items-center justify-between py-5 border-b border-borderGrey2">
+                    {/* <div className="w-full flex items-center justify-between py-5 border-b border-borderGrey2">
                       <p className="w-[106px] text-base text-foreground font-medium leading-[24px] tracking-[0.2px]">
                         Model
                       </p>
                       <p className="text-sm text-foreground w-full font-normal leading-[16px] tracking-[1.4px]">
                         Model is 6′2″, wearing a size M
                       </p>
-                    </div>
+                    </div> */}
 
-                    <div className="w-fyll flex items-center justify-between py-5">
+                    <div className="w-fyll flex items-center justify-between py-5 border-t border-borderGrey2">
                       <p className="w-[106px] text-base text-foreground font-medium leading-[24px] tracking-[0.2px]">
                         Fit
                       </p>
                       <p className="text-sm text-foreground w-full font-normal leading-[16px] tracking-[1.4px]">
                         Questions about fit? <br />
-                        <a href="">Contact Us </a>
+                        <a href="/contact">Contact Us </a>
                         <br />
-                        <a href="">Size Guide</a>
+                        {/* <a href="">Size Guide</a> */}
                       </p>
                     </div>
                   </div>
 
                   {/* SUSTAINABILITY */}
-                  <div className="w-full z-10 relative">
+                  {/* <div className="w-full z-10 relative">
                     <Image
                       src={sustain}
                       alt="sustainability"
                       loading="lazy"
                       className="w-full"
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

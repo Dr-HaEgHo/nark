@@ -73,9 +73,19 @@ const SearchResults: FC<SearchResultsPropsType> = ({
                   [1, 2, 3, 4, 5, 6, 7, 8].map((_, idx: number) => (
                     <ItemCardLoading key={idx} />
                   ))
-                ) : collection !== null &&
-                  collection !== undefined &&
-                  collection.length ? (
+                ) : collection === null || searchterm === "" ? (
+                  <div className="w-full flex items-center justify-center ">
+                    <p className="text-base font-normal text-deleteGrey text-left">
+                      Please enter the name of the product you're looking for
+                    </p>
+                  </div>
+                ) : !collection?.length ? (
+                  <div className="w-full h-[100px] flex items-center justify-center ">
+                    <p className="text-base font-normal text-deleteGrey text-center">
+                      Apologies! we don't have { searchterm} yet... 
+                    </p>
+                  </div>
+                ) : (
                   collection.map((item: any, idx: number) => (
                     <div onClick={() => setOpen(false)}>
                       <ItemCard
@@ -91,16 +101,6 @@ const SearchResults: FC<SearchResultsPropsType> = ({
                       />
                     </div>
                   ))
-                ) : collection?.length === 0 ? (<div className="w-full h-[100px] flex items-center justify-center">
-                  <p className="text-base font-normal text-deleteGrey text-center">
-                    Apologies! we don't have that yet...
-                  </p>
-                </div>) : (
-                  <div className="w-full h-[100px] flex items-center justify-center">
-                    <p className="text-base font-normal text-deleteGrey text-center">
-                      Error loading products...
-                    </p>
-                  </div>
                 )}
               </div>
             </div>

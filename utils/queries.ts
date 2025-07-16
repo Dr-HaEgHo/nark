@@ -51,7 +51,15 @@ export const getProductById = gql`
       id
       title
       description
-      images(first: 5) {
+      collections(first: 1) {
+      edges {
+        node {
+          id
+          title  # This is the collection name (category name)
+        }
+      }
+    }
+      images(first: 10) {
         edges {
           node {
             url
@@ -59,7 +67,7 @@ export const getProductById = gql`
           }
         }
       }
-      variants(first: 10) {
+      variants(first: 20) {
         edges {
           node {
             id
@@ -461,6 +469,54 @@ export const addToCart = gql`
   }
 `;
 
+export const removeFromCartOld = gql`
+mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    cart {
+      # Cart fields
+    }
+    userErrors {
+      field
+      message
+    }
+    warnings {
+      # CartWarning fields
+    }
+  }
+}`;
+
+export const removeFromCart = gql`
+  mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+    cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+      cart {
+        id
+        totalQuantity
+        lines(first: 10) {
+          edges {
+            node {
+              id
+              quantity
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  title
+                  product {
+                    title
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
 export const searchProductsByName = gql`
   query SearchProducts($searchTerm: String!) {
     products(first: 10, query: $searchTerm) {
@@ -495,3 +551,40 @@ export const searchProductsByName = gql`
     }
   }
 `;
+
+export const getCheckout = gql`
+  query checkoutURL($id: ID!) {
+    cart(id: $id) {
+      checkoutUrl
+    }
+  }
+`;
+
+export const updateBuyerIdentity = gql`
+mutation {
+  cartBuyerIdentityUpdate(
+    cartId: "gid://shopify/Cart/Z2NwLXVzLWV4YW1wbGU6MDEyMzQ1Njc4OTAxMjM0NTY3ODkw?key=examplekey1234567890"
+    buyerIdentity: {
+      customerAccessToken: "1b024bde52fcce3c363d2e67f7a13958"
+    }
+  ) {
+    cart {
+      id
+      buyerIdentity {
+        customerAccessToken
+      }
+    }
+  }
+}`
+
+// export const createAccessToken = gql`
+// mutation customerAccessTokenCreate {
+//   customerAccessTokenCreate(input: {email: "ghaida@example.com", password: "7dx2gx2Z"}) {
+//     customerAccessToken {
+//       accessToken
+//     }
+//     customerUserErrors {
+//       message
+//     }
+//   }
+// }`

@@ -24,7 +24,7 @@ const Button: FC<buttonProps> = (props) => {
           disabled={props.disabled}
           onClick={props.cta}
           className={cn(
-            "flex items-center gap-2 rounded-full p-1 pr-6 hoverActiveScale",
+            "flex items-center gap-2 rounded-full p-1 pr-6 hoverActiveScale cursor-pointer",
             props.className,
             {
               "bg-foreground text-background": props.theme === "dark",

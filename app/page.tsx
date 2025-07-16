@@ -3,6 +3,7 @@ import BrowseCollections from "@/components/home/BrowseCollections";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Hero from "@/components/home/Hero";
 import NewArrivals from "@/components/home/NewArrivals";
+import TwilioChat from "@/components/home/TwilioChat";
 import { GlobalContext } from "@/context/context";
 import { createCart, getAllProducts } from "@/utils/queries";
 import client from "@/utils/StorefrontInit";
@@ -106,6 +107,7 @@ export default function Home() {
     <>
       {/* <button onClick={fetchAllProducts} className="py-2 cursor-pointer px-6 bg-black text-white ">Fetch Variants</button> */}
       {/* <button onClick={handleCheckout} className="py-2 cursor-pointer px-6 bg-black text-white ">Checkout</button> */}
+      {/* <TwilioChat/> */}
       {/* <button onClick={handleCreateCart} className="py-2 cursor-pointer px-6 bg-black text-white ">Create Cart</button> */}
       {/* <button
         onClick={() => getCollectionByHandle("gid://shopify/Collection/292794826835")}

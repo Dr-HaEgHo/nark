@@ -113,11 +113,11 @@ const SubCategoryPage = () => {
 
   return (
     <div className="w-full">
-      <div className="container">
+      <div className="container max-lg:px-4">
         <div className="w-full">
           {loading ? (
-            <div className="w-full grid grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map((number, idx: number) => (
+            <div className="w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+              {[1, 2, 3, 4].map((_, idx: number) => (
                 <ItemCardLoading key={idx} />
               ))}
             </div>
@@ -126,7 +126,7 @@ const SubCategoryPage = () => {
             collection.length ? (
             <>
               <BlackHeaderSeeAll title={header} />
-              <div className="w-full grid grid-cols-4 gap-6 mt-10">
+              <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mt-10">
                 {collection.map((item: any, idx: number) => (
                   <ItemCard
                     key={idx}

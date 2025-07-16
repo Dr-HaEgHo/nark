@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import { ToastContainer } from "react-toastify";
 import client from "@/utils/StorefrontInit";
 import { getCollections } from "@/utils/queries";
+import Script from "next/script";
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -49,12 +50,10 @@ export default function RootLayout({
   useEffect(() => {
     // fetchCollections()
   }, []);
-  
+
   // useEffect(() => {
   //   console.log("this is collections from context: ", collections);
   // }, [collections]);
-
-  
 
   return (
     <html lang="en">
@@ -67,6 +66,23 @@ export default function RootLayout({
           {customLayout === false && <Footer />}
           <ToastContainer />
         </GlobalContextProvider>
+        <Script
+          id="tawkto"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+              (function(){
+              var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+              s1.async=true;
+              s1.src='https://embed.tawk.to/6874e4ca1706a0190d63793d/1j049rebp';
+              s1.charset='UTF-8';
+              s1.setAttribute('crossorigin','*');
+              s0.parentNode.insertBefore(s1,s0);
+              })();
+            `,
+          }}
+        />
       </body>
     </html>
   );

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import React, { useCallback, useContext, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { RiCloseLargeFill } from "react-icons/ri";
-import { Heart, SearchNormal1, Shop } from "iconsax-react";
+import { CloseSquare, Heart, SearchNormal1, Shop } from "iconsax-react";
 import { FiUser } from "react-icons/fi";
 import { GrCart } from "react-icons/gr";
 
@@ -19,15 +19,15 @@ import client from "@/utils/StorefrontInit";
 import { searchProductsByName } from "@/utils/queries";
 
 const links = [
-  { id: 1, name: "Men", route: "/categories/men" },
-  { id: 2, name: "Women", route: "/categories/women" },
+  { id: 1, name: "Men Shop Here", route: "/categories/men" },
+  { id: 2, name: "Women Shop Here", route: "/categories/women" },
   // {
   //   id: 3,
   //   name: "Cosmetics",
   //   route: "/categories/cosmetics",
   // },
   { id: 4, name: "Shop", route: "/categories" },
-  { id: 5, name: "Contact", route: "/", subroute: "/categories" },
+  { id: 5, name: "Contact", route: "/contact", subroute: "/categories" },
 ];
 
 const Navbar = () => {
@@ -44,7 +44,7 @@ const Navbar = () => {
 
   const searchProducts = async (term: string) => {
     console.log("Searching for:", term);
-    if(term === "") return;
+    if (term === "") return;
     setKeyword(term);
     setSearchLoad(true);
     setSearchResults(null);
@@ -57,15 +57,19 @@ const Navbar = () => {
       });
       if (res) {
         console.log("SEARCH SUCCESS::::::", res.data.products.edges);
-        setSearchResults(res?.data?.products?.edges)
+        if (!res.data.products.edges.length) {
+          setSearchResults(null);
+        }
+        setSearchResults(res?.data?.products?.edges);
       }
       setSearchLoad(false);
     } catch (err: any) {
       console.log("SEARCH ERROR::::::", err);
+      setSearchResults(null);
       setSearchLoad(false);
     }
 
-    console.log("SEARCH RESULTS:::::::", searchResults)
+    console.log("SEARCH RESULTS:::::::", searchResults);
   };
 
   const debouncedSearch = useCallback(debounce(searchProducts, 2000), []);
@@ -145,9 +149,9 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <Link href="/">
+                  {/* <Link href="/">
                     <Heart size={18} color="black" />
-                  </Link>
+                  </Link> */}
                   <button
                     onClick={() => {
                       setCartOpen(!cartOpen);
@@ -156,9 +160,9 @@ const Navbar = () => {
                   >
                     <GrCart size={18} color="black" />
                   </button>
-                  <Link href="/">
+                  {/* <Link href="/">
                     <FiUser size={18} color="black" />
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
 
@@ -182,16 +186,26 @@ const Navbar = () => {
 
               <div
                 style={{
-                  bottom: open ? "0%" : "-103%",
+                  top: open ? "0%" : "-103%",
                 }}
-                className="menuHeight fixed left-0 w-full bg-menuPink p-4 transition duration-300"
+                className="h-full fixed left-0 w-full bg-white p-4 transition duration-300"
               >
                 <div className="flex h-full w-full flex-col">
-                  <div className="flex items-center justify-start border-b border-greyPink py-6">
+                  <div className="flex items-center justify-between border-b border-greyPink py-6">
                     <p className="text-4 font-[600]">Menu</p>
+                    <CloseSquare onClick={toggleMenu} className="hoverActive cursor-pointer" variant="Bulk" size={32} color={"black"}/>
                   </div>
 
                   <ul className="mt-7 flex w-full flex-[1] flex-col gap-4">
+                    <p
+                      onClick={() => {
+                        setCartOpen(true),
+                        setOpen(false)
+                      }}
+                      className={`rounded-lg p-4 text-lg font-[500] uppercase cursor-pointer`}
+                    >
+                      CART
+                    </p>
                     {links &&
                       links.map((link, idx: number) => (
                         <li

@@ -60,9 +60,9 @@ const ItemCard: FC<Props> = ({ title, price, image, id }) => {
       </div>
 
       <div className="flex flex-col items-start gap-2">
-        <button className="transition duration-200 text-base text-left font-medium cursor-pointer leading-[24px] hover:opacity-60 active:opacity-50 line-clamp-2 overflow-ellipsis">{title ?? 'Product Name'}</button>
-        <p className="text-base font-medium leading-[24px] text-priceGreen">
-          from  { price ? `$${price}` : ''}
+        <button className="transition duration-200 text-ms mdtext-base text-left font-medium cursor-pointer leading-[16px] md:leading-[24px] hover:opacity-60 active:opacity-50 line-clamp-2 overflow-ellipsis">{title ?? 'Product Name'}</button>
+        <p className="text-sm md:text-base text-left font-medium leading-[24px] text-priceGreen">
+          from  <span className="line-through text-[#929292]">{ price ? `$${parseFloat(price / 0.8 as unknown as string).toFixed(2)}` : ''}</span> { price ? `$${price}` : ''}
         </p>
       </div>
     </button>

@@ -23,11 +23,11 @@ const FeaturedProducts = () => {
             wordOne="Featured"
             wordTwo="Products"
             link=""
-            linkWord="See All"
+            // linkWord="See All"
           />
 
           {/* Grid container */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {loading ? (
               [1, 2, 3, 4].map((item, idx: number) => (
                 <ItemCardLoading key={idx} />

@@ -43,7 +43,7 @@ const NewArrivals = () => {
           />
 
           {/* Grid container */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
             {loading ? (
               [1, 2, 3, 4].map((item, idx: number) => (
                 <ItemCardLoading key={idx} />
@@ -67,7 +67,7 @@ const NewArrivals = () => {
             )}
           </div>
 
-          <div className="w-full max-md:px-4 max-lg:px-6 block lg:hidden">
+          <div className="w-full max-md:px-4 max-lg:px-6 blok hidden">
             <Link href="/">
               <Button
                 text="See All"

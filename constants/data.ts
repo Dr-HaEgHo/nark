@@ -49,10 +49,10 @@ export const footerLinks = [
     name: "Account",
     links: [
       { id: "Adsmidsf", title: "My Account", route: "/" },
-      { id: "Adsdddfsf", title: "Login/Register", route: "/" },
-      { id: "Adsds334f", title: "Cart", route: "/" },
-      { id: "Adsdsshf", title: "Wishlist", route: "/" },
-      { id: "Adsds4634f", title: "Shop", route: "/" },
+      { id: "Adsdddfsf", title: "Login/Register", route: "/auth/login" },
+      { id: "Adsds334f", title: "Cart", route: "" },
+      // { id: "Adsdsshf", title: "Wishlist", route: "/" },
+      // { id: "Adsds4634f", title: "Shop", route: "/categories" },
     ],
   },
   {
@@ -62,7 +62,7 @@ export const footerLinks = [
       { id: "Adsdsfg34", title: "Privacy Policy", route: "/" },
       { id: "Adssddfsf", title: "Terms of Use", route: "/" },
       { id: "Adsfsds453f", title: "FAQ", route: "/" },
-      { id: "Adsdsf325", title: "Contact", route: "/" },
+      { id: "Adsdsf325", title: "Contact", route: "/contact" },
     ],
   },
 ];
@@ -763,7 +763,7 @@ export const categoryLinks = [
 export const categoriesWomen = {
   topDeals: womenTopDeals,
   fashion: {
-    title: "Fashion",
+    title: "Shop Women Fashion here",
     image: browncoatlady,
     topDeals: womenTopDeals,
     catalogue: [
@@ -774,7 +774,7 @@ export const categoriesWomen = {
     ],
   },
   beauty: {
-    title: "Beauty",
+    title: "Shop Women Beauty Products Here",
     image: accessories,
     topDeals: menTopDeals,
     catalogue: [
@@ -785,7 +785,7 @@ export const categoriesWomen = {
     ],
   },
   lifestyle: {
-    title: "Lifestyle",
+    title: "Shop Women Lifestyle Products Here",
     image: blackshoes,
     topDeals: cosmeticTopDeals,
     catalogue: [
@@ -800,7 +800,7 @@ export const categoriesWomen = {
 export const categories = {
   topDeals:menTopDeals,
   fashion: {
-    title: "Fashion",
+    title: "Shop Men Fashion here",
     image: blueshirthatguy,
     topDeals: womenTopDeals,
     catalogue: [
@@ -811,7 +811,7 @@ export const categories = {
     ],
   },
   beauty: {
-    title: "Beauty",
+    title: "Shop Men Beauty Products Here",
     image: whiteandblazerguy,
     topDeals: menTopDeals,
     catalogue: [
@@ -822,7 +822,7 @@ export const categories = {
     ],
   },
   lifestyle: {
-    title: "Lifestyle",
+    title: "Shop Men Lifestyle Products Here",
     image: brownnike,
     topDeals: cosmeticTopDeals,
     catalogue: [
