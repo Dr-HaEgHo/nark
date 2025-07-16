@@ -138,6 +138,7 @@ const Cart = () => {
       if (res) {
         console.log("Checkout URL:", res.data.cart);
         setCheckoutUrl(res.data)
+        router.push(res.data.cart.checkoutUrl);
         setCheckoutLoad(false);
         return res;
       }
@@ -191,8 +192,8 @@ const Cart = () => {
     if (cartId === null) return;
 
     fetchCheckoutUrl(cartId);
-    if (checkoutUrl === null) return;
-    router.push(checkoutUrl.cart.checkoutUrl);
+    // if (checkoutUrl === null) return;
+    // router.push(checkoutUrl.cart.checkoutUrl);
   };
 
   const deleteItem = async (lineId: string) => {

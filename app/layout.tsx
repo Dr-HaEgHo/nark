@@ -10,7 +10,7 @@ import Cart from "@/components/shared/Cart";
 import dynamic from "next/dynamic";
 import { ToastContainer } from "react-toastify";
 import client from "@/utils/StorefrontInit";
-import { getCollections } from "@/utils/queries";
+import { createCart, getCollections } from "@/utils/queries";
 import Script from "next/script";
 
 // export const metadata: Metadata = {
@@ -47,7 +47,25 @@ export default function RootLayout({
   //   }
   // }
 
+
+  const handleCreateCart = async() => {
+    const localCartId = localStorage.getItem('narkCartId')
+
+    if(localCartId) return
+
+    let id: string = "";
+    try{
+      const res = await client.request(createCart, {})
+      if(res) id = res.data.cartCreate.cart.id
+      localStorage.setItem('narkCartId', id )
+      console.log("CREATE CART SUCCESS::::::", id);
+    }catch(err: any){
+      console.log("CREATE CART ERROR::::::",err)
+    }
+  } 
+
   useEffect(() => {
+    handleCreateCart();
     // fetchCollections()
   }, []);
 

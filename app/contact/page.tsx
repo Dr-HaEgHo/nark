@@ -102,7 +102,7 @@ const Contact = () => {
           {show && (
             <div className="w-[70%] lg:w-[400px] p-3 bg-[#fff] rounded-full fixed top-10 right-10 z-[999999] shadow-lg">
               <p className="text-black font-normal text-base">
-                {/* {status && status} */}sjnfrfwefw
+                {status && status}
               </p>
             </div>
           )}

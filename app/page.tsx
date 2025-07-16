@@ -37,21 +37,7 @@ export default function Home() {
     }
   };
 
-  const handleCreateCart = async() => {
-    const localCartId = localStorage.getItem('narkCartId')
-
-    if(localCartId) return
-
-    let id: string = "";
-    try{
-      const res = await client.request(createCart, {})
-      if(res) id = res.data.cartCreate.cart.id
-      localStorage.setItem('narkCartId', id )
-      console.log("CREATE CART SUCCESS::::::", id);
-    }catch(err: any){
-      console.log("CREATE CART ERROR::::::",err)
-    }
-  } 
+  
 
 
   const fetchAllProducts = async () => {
@@ -99,7 +85,6 @@ export default function Home() {
   useEffect(() => {
     // fetchData();
     setCustomLayout(false);
-    handleCreateCart();
     // fetchAllProducts();
   }, []);
 
