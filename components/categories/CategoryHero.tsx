@@ -59,7 +59,7 @@ const CategoryHero: FC<Props> = ({ data }) => {
                 <Link
                   href={`/categories/${
                     path.split("/")[2]
-                  }/${data.fashion.title.toLowerCase()}`}
+                  }/${data.fashion.route.toLowerCase()}`}
                   className="w-full aspect-[1.49] overflow-hidden bg-yellow-400 rounded-xl md:rounded-[20px] relative"
                 >
                   <Image
@@ -78,7 +78,7 @@ const CategoryHero: FC<Props> = ({ data }) => {
                 <Link
                   href={`/categories/${
                     path.split("/")[2]
-                  }/${data.beauty.title.toLowerCase()}`}
+                  }/${data.beauty.route.toLowerCase()}`}
                   className="w-full aspect-[1.49] overflow-hidden bg-yellow-400 rounded-xl md:rounded-[20px] relative"
                 >
                   <Image
@@ -97,7 +97,7 @@ const CategoryHero: FC<Props> = ({ data }) => {
                 <Link
                   href={`/categories/${
                     path.split("/")[2]
-                  }/${data.lifestyle.title.toLowerCase()}`}
+                  }/${data.lifestyle.route.toLowerCase()}`}
                   className="w-full aspect-[1.49] overflow-hidden bg-yellow-400 rounded-xl md:rounded-[20px] relative"
                 >
                   <Image

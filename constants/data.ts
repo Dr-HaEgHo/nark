@@ -764,6 +764,7 @@ export const categoriesWomen = {
   topDeals: womenTopDeals,
   fashion: {
     title: "Shop Women Fashion here",
+    route: "Fashion",
     image: browncoatlady,
     topDeals: womenTopDeals,
     catalogue: [
@@ -775,6 +776,7 @@ export const categoriesWomen = {
   },
   beauty: {
     title: "Shop Women Beauty Products Here",
+    route: "Beauty",
     image: accessories,
     topDeals: menTopDeals,
     catalogue: [
@@ -786,6 +788,7 @@ export const categoriesWomen = {
   },
   lifestyle: {
     title: "Shop Women Lifestyle Products Here",
+    route: "Lifestyle",
     image: blackshoes,
     topDeals: cosmeticTopDeals,
     catalogue: [
@@ -801,6 +804,7 @@ export const categories = {
   topDeals:menTopDeals,
   fashion: {
     title: "Shop Men Fashion here",
+    route: "Fashion",
     image: blueshirthatguy,
     topDeals: womenTopDeals,
     catalogue: [
@@ -812,6 +816,7 @@ export const categories = {
   },
   beauty: {
     title: "Shop Men Beauty Products Here",
+    route: "Beauty",
     image: whiteandblazerguy,
     topDeals: menTopDeals,
     catalogue: [
@@ -823,6 +828,7 @@ export const categories = {
   },
   lifestyle: {
     title: "Shop Men Lifestyle Products Here",
+    route: "Lifestyle",
     image: brownnike,
     topDeals: cosmeticTopDeals,
     catalogue: [
